@@ -15,17 +15,20 @@ export const characterFormSchema = z.object({
   runeSet1: z.enum(["none", "fury", "doom", "fight"]),
   runeSet2: z.enum(["none", "fury", "doom", "fight"]),
   ring: ringSchema,
+  voidPieces: z.number().min(0).max(7),
 });
 
 export const accountSchema = z.object({
   chaseLevel: z.number().min(1).max(99),
   cardCollectionLevel: z.number().min(1).max(99),
+  nickname: z.string().min(1).max(20),
 });
 
 export const displaySettingsSchema = z.object({
   account: z.object({
     chaseLevel: z.boolean(),
     cardCollectionLevel: z.boolean(),
+    nickname: z.boolean(),
   }),
   character: z.object({
     level: z.boolean(),
@@ -35,12 +38,14 @@ export const displaySettingsSchema = z.object({
     runeSet1: z.boolean(),
     runeSet2: z.boolean(),
     ring: z.boolean(),
+    voidPieces: z.boolean(),
   }),
   summaries: z.object({
     level85Count: z.boolean(),
     floor30Count: z.boolean(),
     oneMillionCount: z.boolean(),
     relicChaosRingCount: z.boolean(),
+    completedRingCount: z.boolean(),
   }),
 });
 
