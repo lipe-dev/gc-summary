@@ -46,6 +46,7 @@ export const displaySettingsSchema = z.object({
     oneMillionCount: z.boolean(),
     relicChaosRingCount: z.boolean(),
     completedRingCount: z.boolean(),
+    fullVoidCount: z.boolean(),
   }),
 });
 
