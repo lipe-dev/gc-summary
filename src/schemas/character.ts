@@ -16,6 +16,7 @@ export const characterFormSchema = z.object({
   runeSet2: z.enum(["none", "fury", "doom", "fight"]),
   ring: ringSchema,
   voidPieces: z.number().min(0).max(7),
+  fullSR: z.boolean(),
 });
 
 export const accountSchema = z.object({
@@ -39,6 +40,7 @@ export const displaySettingsSchema = z.object({
     runeSet2: z.boolean(),
     ring: z.boolean(),
     voidPieces: z.boolean(),
+    fullSR: z.boolean(),
   }),
   summaries: z.object({
     level85Count: z.boolean(),
@@ -47,6 +49,7 @@ export const displaySettingsSchema = z.object({
     relicChaosRingCount: z.boolean(),
     completedRingCount: z.boolean(),
     fullVoidCount: z.boolean(),
+    fullSRCount: z.boolean(),
   }),
 });
 

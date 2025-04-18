@@ -21,7 +21,8 @@ const defaultCharacterData: CharacterFormData = {
     level: "I",
     quality: "faded"
   },
-  voidPieces: 0
+  voidPieces: 0,
+  fullSR: false
 };
 
 const defaultDisplaySettings: DisplaySettings = {
@@ -39,6 +40,7 @@ const defaultDisplaySettings: DisplaySettings = {
     runeSet2: true,
     ring: true,
     voidPieces: true,
+    fullSR: true,
   },
   summaries: {
     level85Count: true,
@@ -47,6 +49,7 @@ const defaultDisplaySettings: DisplaySettings = {
     relicChaosRingCount: true,
     completedRingCount: true,
     fullVoidCount: true,
+    fullSRCount: true,
   },
 };
 
@@ -68,7 +71,7 @@ const formatAttack = (attack: number): string => {
   if (attack >= 1000000) {
     return `${(attack / 1000000).toFixed(3)}kk`;
   }
-  return `${(attack / 1000).toFixed(3)}k`;
+  return `${Math.round(attack / 1000)}k`;
 };
 
 const getAttackColorClass = (attack: number, level: number, characters: CharactersData["characters"]): string => {
@@ -249,7 +252,8 @@ const CharacterStats = ({
   showOneMillionCount,
   showRelicChaosRingCount,
   showCompletedRingCount,
-  showFullVoidCount
+  showFullVoidCount,
+  showFullSRCount
 }: { 
   data: CharactersData;
   showLevel85Count: boolean;
@@ -258,6 +262,7 @@ const CharacterStats = ({
   showRelicChaosRingCount: boolean;
   showCompletedRingCount: boolean;
   showFullVoidCount: boolean;
+  showFullSRCount: boolean;
 }) => {
   const totalCharacters = Object.keys(data.characters).length;
   const level85Count = Object.values(data.characters).filter(c => c.level >= 85).length;
@@ -273,6 +278,9 @@ const CharacterStats = ({
   const fullVoidCount = Object.values(data.characters).filter(c => 
     c.voidPieces === 7
   ).length;
+  const fullSRCount = Object.values(data.characters).filter(c => 
+    c.fullSR
+  ).length;
 
   const summaryItems = [
     { show: showLevel85Count, value: `${level85Count}/${totalCharacters}`, label: "Level 85+" },
@@ -280,7 +288,8 @@ const CharacterStats = ({
     { show: showOneMillionCount, value: `${oneMillionCount}/${totalCharacters}`, label: "1M+ Attack" },
     { show: showRelicChaosRingCount, value: `${relicChaosRingCount}/${totalCharacters}`, label: "Top Earrings" },
     { show: showCompletedRingCount, value: `${completedRingCount}/${totalCharacters}`, label: "Top Rings" },
-    { show: showFullVoidCount, value: `${fullVoidCount}/${totalCharacters}`, label: "Full Void" }
+    { show: showFullVoidCount, value: `${fullVoidCount}/${totalCharacters}`, label: "Full Void" },
+    { show: showFullSRCount, value: `${fullSRCount}/${totalCharacters}`, label: "Full SR" }
   ].filter(item => item.show);
 
   if (summaryItems.length === 0) return null;
@@ -333,6 +342,7 @@ export default function Home() {
           setCharacterValue(`characters.${character.key}.runeSet2`, characterData.runeSet2);
           setCharacterValue(`characters.${character.key}.ring`, characterData.ring);
           setCharacterValue(`characters.${character.key}.voidPieces`, characterData.voidPieces);
+          setCharacterValue(`characters.${character.key}.fullSR`, characterData.fullSR);
         });
       } catch (error) {
         console.error("Error loading saved data:", error);
@@ -538,6 +548,16 @@ export default function Home() {
                       />
                       {characterErrors.characters?.[character.key]?.voidPieces && <span className="text-red-500 text-xs">{characterErrors.characters[character.key]?.voidPieces?.message}</span>}
                     </div>
+                    <div>
+                      <label htmlFor={`${character.key}-full-sr`} className="block text-sm">Full SR</label>
+                      <input
+                        type="checkbox"
+                        id={`${character.key}-full-sr`}
+                        {...registerCharacter(`characters.${character.key}.fullSR`)}
+                        className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      {characterErrors.characters?.[character.key]?.fullSR && <span className="text-red-500 text-xs">{characterErrors.characters[character.key]?.fullSR?.message}</span>}
+                    </div>
                   </div>
                 </fieldset>
               );
@@ -619,6 +639,10 @@ export default function Home() {
                   <input type="checkbox" {...registerDisplay("character.voidPieces")} />
                   <span>Void Pieces</span>
                 </label>
+                <label className="flex items-center gap-2">
+                  <input type="checkbox" {...registerDisplay("character.fullSR")} />
+                  <span>Full SR</span>
+                </label>
               </div>
             </fieldset>
 
@@ -648,6 +672,10 @@ export default function Home() {
                 <label className="flex items-center gap-2">
                   <input type="checkbox" {...registerDisplay("summaries.fullVoidCount")} />
                   <span>Full Void</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input type="checkbox" {...registerDisplay("summaries.fullSRCount")} />
+                  <span>Full SR</span>
                 </label>
               </div>
             </fieldset>
@@ -697,6 +725,7 @@ export default function Home() {
               showRelicChaosRingCount={displaySettings.summaries.relicChaosRingCount}
               showCompletedRingCount={displaySettings.summaries.completedRingCount}
               showFullVoidCount={displaySettings.summaries.fullVoidCount}
+              showFullSRCount={displaySettings.summaries.fullSRCount}
             />
           </div>
         </main>
