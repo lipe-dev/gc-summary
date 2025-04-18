@@ -17,10 +17,42 @@ export const characterFormSchema = z.object({
   ring: ringSchema,
 });
 
-export const characterSchema = z.record(
-  z.enum(characters.map(c => c.key) as [string, ...string[]]),
-  characterFormSchema
-);
+export const accountSchema = z.object({
+  chaseLevel: z.number().min(1).max(99),
+  cardCollectionLevel: z.number().min(1).max(99),
+});
+
+export const displaySettingsSchema = z.object({
+  account: z.object({
+    chaseLevel: z.boolean(),
+    cardCollectionLevel: z.boolean(),
+  }),
+  character: z.object({
+    level: z.boolean(),
+    wlFloor: z.boolean(),
+    totalAttack: z.boolean(),
+    earrings: z.boolean(),
+    runeSet1: z.boolean(),
+    runeSet2: z.boolean(),
+    ring: z.boolean(),
+  }),
+  summaries: z.object({
+    level85Count: z.boolean(),
+    floor30Count: z.boolean(),
+    oneMillionCount: z.boolean(),
+    relicChaosRingCount: z.boolean(),
+  }),
+});
+
+export const characterSchema = z.object({
+  account: accountSchema,
+  characters: z.record(
+    z.enum(characters.map(c => c.key) as [string, ...string[]]),
+    characterFormSchema
+  ),
+});
 
 export type CharacterFormData = z.infer<typeof characterFormSchema>;
-export type CharactersData = z.infer<typeof characterSchema>; 
+export type AccountData = z.infer<typeof accountSchema>;
+export type CharactersData = z.infer<typeof characterSchema>;
+export type DisplaySettings = z.infer<typeof displaySettingsSchema>; 
