@@ -5,7 +5,9 @@ import { characterSchema, type CharacterFormData, type CharactersData, type Disp
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Image from "next/image";
+import { AccountStats } from "@/components/AccountStats";
+import { CharacterCard } from "@/components/CharacterCard";
+import { CharacterStats } from "@/components/CharacterStats";
 
 const STORAGE_KEY = "gc-character-data";
 
@@ -67,247 +69,6 @@ const getDefaultValues = (): CharactersData => {
   };
 };
 
-const formatAttack = (attack: number): string => {
-  if (attack >= 1000000) {
-    return `${(attack / 1000000).toFixed(3)}kk`;
-  }
-  return `${Math.round(attack / 1000)}k`;
-};
-
-const getAttackColorClass = (attack: number, level: number, characters: CharactersData["characters"]): string => {
-  if (level < 85) {
-    return "text-blue-400";
-  }
-
-  const level85Attacks = Object.values(characters)
-    .filter(c => c.level >= 85)
-    .map(c => c.totalAttack);
-  
-  if (level85Attacks.length === 0) {
-    return "text-blue-400";
-  }
-
-  const orderedAttacks = level85Attacks.sort((a, b) => b - a);
-
-  console.log(orderedAttacks);
-
-  const position = orderedAttacks.indexOf(attack);
-
-  console.log(position, attack);
-
-  // if highest
-  if (position === 0) {
-    return "text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500";
-  }
-
-  // if top third
-  if (position <= orderedAttacks.length / 3) {
-    return "text-yellow-500";
-  }
-
-  // if middle third
-  if (position <= orderedAttacks.length / 3 * 2) {
-    return "text-gray-300";
-  }
-
-  return "text-amber-600";
-};
-
-const CharacterCard = ({ 
-  character, 
-  data,
-  showLevel,
-  showWlFloor,
-  showTotalAttack,
-  showEarrings,
-  showRuneSet1,
-  showRuneSet2,
-  showRing,
-  showVoidPieces,
-  characters
-}: { 
-  character: { key: string; name: string };
-  data: CharacterFormData;
-  showLevel: boolean;
-  showWlFloor: boolean;
-  showTotalAttack: boolean;
-  showEarrings: boolean;
-  showRuneSet1: boolean;
-  showRuneSet2: boolean;
-  showRing: boolean;
-  showVoidPieces: boolean;
-  characters: CharactersData["characters"];
-}) => {
-  const cardItems = [
-    { show: showWlFloor, value: data.wlFloor, label: "WL Floor" },
-    { show: showEarrings, value: data.earrings, label: "Earrings" },
-    { show: showRuneSet1 || showRuneSet2, value: `${data.runeSet1 !== "none" ? data.runeSet1 : ""} ${data.runeSet2 !== "none" ? `+ ${data.runeSet2}` : ""}`, label: "Runes" },
-    { show: showRing, value: `${data.ring.type} ${data.ring.level} ${data.ring.quality && `(${data.ring.quality})`}`, label: "Ring" },
-    { show: showVoidPieces, value: data.voidPieces, label: "Void Pieces" }
-  ].filter(item => item.show);
-
-  const getBorderColorClass = (attack: number, level: number, characters: CharactersData["characters"]): string => {
-    if (level < 85) {
-      return "border-blue-400";
-    }
-
-    const level85Attacks = Object.values(characters)
-      .filter(c => c.level >= 85)
-      .map(c => c.totalAttack);
-    
-    if (level85Attacks.length === 0) {
-      return "border-blue-400";
-    }
-
-    const orderedAttacks = level85Attacks.sort((a, b) => b - a);
-    const position = orderedAttacks.indexOf(attack);
-
-    if (position === 0) {
-      return "border-transparent bg-clip-border bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500";
-    }
-
-    if (position <= orderedAttacks.length / 3) {
-      return "border-yellow-500";
-    }
-
-    if (position <= orderedAttacks.length / 3 * 2) {
-      return "border-gray-300";
-    }
-
-    return "border-amber-600";
-  };
-
-  return (
-    <div className="rounded-lg shadow flex flex-col items-center p-2">
-      {(showLevel || showTotalAttack) && (
-        <div className="bg-gradient-to-br from-[#0a0000] to-[#1a0000] rounded-t-lg p-1 pb-0">
-          <div className={`text-2xl font-medium ${getAttackColorClass(data.totalAttack, data.level, characters)}`}>
-            {data.level < 85 ? `Lv${data.level}` : formatAttack(data.totalAttack)}
-          </div>
-        </div>
-      )}
-      <div className={`w-24 h-24 relative mb-2 border-4 ${getBorderColorClass(data.totalAttack, data.level, characters)} rounded-lg overflow-hidden`}>
-        <Image
-          src={`/characters/${character.key}.png`}
-          alt={character.name}
-          fill
-          className="object-contain"
-        />
-      </div>
-      <div className="text-sm space-y-1 w-full">
-        {cardItems.map((item, index) => (
-          <div key={index} className="flex items-center gap-1">
-            <span className="text-gray-300">{item.label}:</span>
-            <span className="text-white">{item.value}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const AccountStats = ({ 
-  data,
-  showChaseLevel,
-  showCardCollectionLevel,
-  showNickname
-}: { 
-  data: CharactersData;
-  showChaseLevel: boolean;
-  showCardCollectionLevel: boolean;
-  showNickname: boolean;
-}) => {
-  if (!showChaseLevel && !showCardCollectionLevel && !showNickname) return null;
-
-  return (
-    <div className="bg-gradient-to-br from-[#2a0000] to-[#3a0000] shadow relative flex flex-row items-center gap-4 p-4 pt-0">
-      {showChaseLevel && (
-        <div className="w-fit">
-          <div className="bg-gradient-to-br from-[#1a0000] to-[#2a0000] border-x-2 border-b-2 border-yellow-500 rounded-b-lg px-10 py-6">
-            <div className="text-4xl font-bold text-center text-yellow-500">{data.account.chaseLevel}</div>
-          </div>
-        </div>
-      )}
-      {showCardCollectionLevel && (
-        <div className="w-fit">
-          <div className="bg-gradient-to-br from-[#1a0000] to-[#2a0000] border-x-2 border-b-2 border-yellow-500 rounded-b-lg px-10 py-6">
-            <div className="text-4xl font-bold text-center text-yellow-500">{data.account.cardCollectionLevel}</div>
-          </div>
-        </div>
-      )}
-
-      {showNickname && (
-        <div className="text-center ml-8">
-          <div className="text-3xl font-medium text-gray-200">{data.account.nickname}</div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const CharacterStats = ({ 
-  data,
-  showLevel85Count,
-  showFloor30Count,
-  showOneMillionCount,
-  showRelicChaosRingCount,
-  showCompletedRingCount,
-  showFullVoidCount,
-  showFullSRCount
-}: { 
-  data: CharactersData;
-  showLevel85Count: boolean;
-  showFloor30Count: boolean;
-  showOneMillionCount: boolean;
-  showRelicChaosRingCount: boolean;
-  showCompletedRingCount: boolean;
-  showFullVoidCount: boolean;
-  showFullSRCount: boolean;
-}) => {
-  const totalCharacters = Object.keys(data.characters).length;
-  const level85Count = Object.values(data.characters).filter(c => c.level >= 85).length;
-  const floor30Count = Object.values(data.characters).filter(c => c.wlFloor >= 30).length;
-  const oneMillionCount = Object.values(data.characters).filter(c => c.totalAttack >= 1000000).length;
-  const relicChaosRingCount = Object.values(data.characters).filter(c => 
-    c.earrings === "relic-set" || c.earrings === "chaos-set"
-  ).length;
-  const completedRingCount = Object.values(data.characters).filter(c => 
-    (c.ring.type === "promise") || 
-    (c.ring.level === "III" && c.ring.quality === "shiny")
-  ).length;
-  const fullVoidCount = Object.values(data.characters).filter(c => 
-    c.voidPieces === 7
-  ).length;
-  const fullSRCount = Object.values(data.characters).filter(c => 
-    c.fullSR
-  ).length;
-
-  const summaryItems = [
-    { show: showLevel85Count, value: `${level85Count}/${totalCharacters}`, label: "Level 85+" },
-    { show: showFloor30Count, value: `${floor30Count}/${totalCharacters}`, label: "Floor 30+" },
-    { show: showOneMillionCount, value: `${oneMillionCount}/${totalCharacters}`, label: "1M+ Attack" },
-    { show: showRelicChaosRingCount, value: `${relicChaosRingCount}/${totalCharacters}`, label: "Top Earrings" },
-    { show: showCompletedRingCount, value: `${completedRingCount}/${totalCharacters}`, label: "Top Rings" },
-    { show: showFullVoidCount, value: `${fullVoidCount}/${totalCharacters}`, label: "Full Void" },
-    { show: showFullSRCount, value: `${fullSRCount}/${totalCharacters}`, label: "Full SR" }
-  ].filter(item => item.show);
-
-  if (summaryItems.length === 0) return null;
-
-  return (
-    <div className="bg-gradient-to-br from-[#2a0000] to-[#3a0000] shadow relative flex flex-row items-center justify-end gap-4 p-4">
-      {summaryItems.map((item, index) => (
-        <div key={index} className="w-fit">
-          <div className="bg-gradient-to-br from-[#1a0000] to-[#2a0000] rounded-lg px-6 py-4">
-            <div className="text-2xl font-bold text-center text-yellow-500">{item.value}</div>
-            <div className="text-xs text-center text-gray-300 mt-0.5">{item.label}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
 export default function Home() {
   const [showCharacterSidebar, setShowCharacterSidebar] = useState(true);
   const [showDisplaySidebar, setShowDisplaySidebar] = useState(true);
@@ -355,8 +116,8 @@ export default function Home() {
     console.log("Data saved:", data);
   };
 
-
   const displaySettings = watchDisplay();
+  const allCharactersData = watchCharacter();
 
   return (
     <div className="h-screen flex flex-col">
@@ -683,10 +444,10 @@ export default function Home() {
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 overflow-y-auto flex items-center justify-center">
+        <main className="overflow-y-auto p-8">
           <div className="w-[1024px] bg-gradient-to-br from-[#1a0000] to-[#2a0000] rounded-lg shadow-lg p-0">
             <AccountStats 
-              data={watchCharacter()}
+              data={allCharactersData}
               showChaseLevel={displaySettings.account.chaseLevel}
               showCardCollectionLevel={displaySettings.account.cardCollectionLevel}
               showNickname={displaySettings.account.nickname}
@@ -696,7 +457,7 @@ export default function Home() {
               {characters
                 .map(character => ({
                   character,
-                  data: watchCharacter(`characters.${character.key}`)
+                  data: allCharactersData.characters[character.key]
                 }))
                 .sort((a, b) => b.data.totalAttack - a.data.totalAttack)
                 .map(({ character, data: characterData }) => (
@@ -712,13 +473,13 @@ export default function Home() {
                     showRuneSet2={displaySettings.character.runeSet2}
                     showRing={displaySettings.character.ring}
                     showVoidPieces={displaySettings.character.voidPieces}
-                    characters={watchCharacter().characters}
+                    characters={allCharactersData.characters}
                   />
                 ))}
             </div>
 
             <CharacterStats 
-              data={watchCharacter()}
+              data={allCharactersData}
               showLevel85Count={displaySettings.summaries.level85Count}
               showFloor30Count={displaySettings.summaries.floor30Count}
               showOneMillionCount={displaySettings.summaries.oneMillionCount}
