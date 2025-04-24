@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Image from "next/image";
 import { CharacterFormData, CharactersData } from "@/schemas/character";
 
@@ -114,12 +115,11 @@ export function CharacterCard({
           </div>
         </div>
       )}
-      <div className={`w-24 h-24 relative border-4 ${getBorderColorClass(data.totalAttack, data.level, characters)} rounded-lg overflow-hidden`}>
-        <Image
+      <div className={`flex items-center justify-center object-cover w-24 h-24 relative border-4 ${getBorderColorClass(data.totalAttack, data.level, characters)} rounded-2xl overflow-hidden`}>
+        <img
           src={`/characters/${character.key}.png`}
           alt={character.name}
-          fill
-          className="object-contain"
+          className="object-cover w-[120%] h-[120%]"
         />
       </div>
       <div className="text-sm space-y-1 w-full">

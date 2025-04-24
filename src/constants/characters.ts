@@ -111,9 +111,9 @@ export const characters: Character[] = [
     key: "decane"
   },
   {
-    name: "Kalia",
-    profilePicture: "/characters/kalia.jpg",
-    key: "kalia"
+    name: "Kallia",
+    profilePicture: "/characters/kallia.jpg",
+    key: "kallia"
   },
   {
     name: "Uno",
