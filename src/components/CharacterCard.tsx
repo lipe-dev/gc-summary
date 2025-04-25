@@ -101,10 +101,10 @@ export function CharacterCard({
   characters
 }: CharacterCardProps) {
   const cardItems = [
-    { show: showWlFloor, value: data.wlFloor, label: "WL Floor" },
-    { show: showEarrings, value: data.earrings, label: "Earrings" },
-    { show: showRing, value: `${data.ring.type} ${data.ring.level} ${data.ring.quality && `(${data.ring.quality})`}`, label: "Ring" },
-    { show: showVoidPieces, value: data.voidPieces, label: "Void Pieces" }
+    { show: showWlFloor, value: `${data.wlFloor}F` },
+    { show: showEarrings, value: data.earrings },
+    { show: showRing, value: `${data.ring.type} ${data.ring.level} ${data.ring.quality && `(${data.ring.quality})`}` },
+    { show: showVoidPieces, value: data.voidPieces }
   ].filter(item => item.show);
 
   return (
@@ -123,20 +123,19 @@ export function CharacterCard({
           className="object-cover w-[120%] h-[120%]"
         />
       </div>
-      {(showRuneSet1 || showRuneSet2) && (data.runeSet1 !== "none" || data.runeSet2 !== "none") && (
-        <div className="flex mt-1">
-          {data.runeSet1 !== "none" && showRuneSet1 && (
-            <RuneIcon rune={runes[data.runeSet1]} size={20} />
-          )}
-          {data.runeSet2 !== "none" && showRuneSet2 && (
-            <RuneIcon rune={runes[data.runeSet2]} size={20} />
-          )}
-        </div>
-      )}
-      <div className="text-sm space-y-1 w-full">
+      <div className="flex items-center">
+        {(showRuneSet1 || showRuneSet2) && (data.runeSet1 !== "none" || data.runeSet2 !== "none") && (
+          <>
+            {data.runeSet1 !== "none" && showRuneSet1 && (
+              <RuneIcon rune={runes[data.runeSet1]} size={20} />
+            )}
+            {data.runeSet2 !== "none" && showRuneSet2 && (
+              <RuneIcon rune={runes[data.runeSet2]} size={20} />
+            )}
+          </>
+        )}
         {cardItems.map((item, index) => (
           <div key={index} className="flex items-center gap-1">
-            <span className="text-gray-300">{item.label}:</span>
             <span className="text-white">{item.value}</span>
           </div>
         ))}
