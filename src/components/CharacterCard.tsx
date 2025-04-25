@@ -3,6 +3,8 @@ import Image from "next/image";
 import { CharacterFormData, CharactersData } from "@/schemas/character";
 import { runes } from "@/constants/runes";
 import { RuneIcon } from "./RuneIcon";
+import { earrings } from "@/constants/earrings";
+import { EarringIcon } from "./EarringIcon";
 
 const formatAttack = (attack: number): string => {
   if (attack >= 1000000) {
@@ -102,7 +104,6 @@ export function CharacterCard({
 }: CharacterCardProps) {
   const cardItems = [
     { show: showWlFloor, value: `${data.wlFloor}F` },
-    { show: showEarrings, value: data.earrings },
     { show: showRing, value: `${data.ring.type} ${data.ring.level} ${data.ring.quality && `(${data.ring.quality})`}` },
     { show: showVoidPieces, value: data.voidPieces }
   ].filter(item => item.show);
@@ -123,7 +124,10 @@ export function CharacterCard({
           className="object-cover w-[120%] h-[120%]"
         />
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center mt-1">
+        {showEarrings && (
+          <EarringIcon earring={earrings[data.earrings]} size={20} />
+        )}
         {(showRuneSet1 || showRuneSet2) && (data.runeSet1 !== "none" || data.runeSet2 !== "none") && (
           <>
             {data.runeSet1 !== "none" && showRuneSet1 && (
