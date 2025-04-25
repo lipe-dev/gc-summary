@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import { AccountStats } from "@/components/AccountStats";
 import { CharacterCard } from "@/components/CharacterCard";
 import { CharacterStats } from "@/components/CharacterStats";
-import { RuneIcon } from "@/components/RuneIcon";
 import { runes } from "@/constants/runes";
 
 const STORAGE_KEY = "gc-character-data";
@@ -126,20 +125,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0000] to-[#1a0000] text-white">
-      <div className="container mx-auto px-4 py-8">
-        {/* Test Runes Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Rune Icons Test</h2>
-          <div className="grid grid-cols-6 gap-4">
-            {Object.values(runes).map((rune) => (
-              <div key={rune.id} className="flex flex-col items-center p-4 bg-gradient-to-br from-[#1a0000] to-[#2a0000] rounded-lg">
-                <RuneIcon rune={rune} size={24} className="text-yellow-500" />
-                <span className="mt-2 text-sm">{rune.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
         <div className="h-screen flex flex-col">
           {/* Top bar with toggle buttons */}
           <div className="bg-gray-100 dark:bg-gray-800 p-2 flex gap-2">
@@ -272,9 +257,11 @@ export default function Home() {
                             className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
                           >
                             <option value="none">None</option>
-                            <option value="fury">Fury</option>
-                            <option value="doom">Doom</option>
-                            <option value="fight">Fight</option>
+                            {Object.values(runes).map((rune) => (
+                              <option key={rune.id} value={rune.id}>
+                                {rune.label}
+                              </option>
+                            ))}
                           </select>
                           {characterErrors.characters?.[character.id]?.runeSet1 && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.runeSet1?.message}</span>}
                         </div>
@@ -286,9 +273,11 @@ export default function Home() {
                             className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
                           >
                             <option value="none">None</option>
-                            <option value="fury">Fury</option>
-                            <option value="doom">Doom</option>
-                            <option value="fight">Fight</option>
+                            {Object.values(runes).map((rune) => (
+                              <option key={rune.id} value={rune.id}>
+                                {rune.label}
+                              </option>
+                            ))}
                           </select>
                           {characterErrors.characters?.[character.id]?.runeSet2 && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.runeSet2?.message}</span>}
                         </div>
@@ -528,6 +517,5 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
