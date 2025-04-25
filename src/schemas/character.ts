@@ -19,7 +19,7 @@ export const characterFormSchema = z.object({
   earrings: z.enum(["in-progress", "epic-set", "relic-set", "chaos-set"]),
   runeSet1: z.enum(["none", ...Object.keys(runes)]),
   runeSet2: z.enum(["none", ...Object.keys(runes)]),
-  ring: z.enum(Object.keys(rings) as [string, ...string[]]),
+  ring: z.enum(["in-progress", ...Object.keys(rings)]),
   voidPieces: z.record(z.boolean()),
   fullSR: z.record(z.boolean()).refine(
     (obj) => Object.keys(obj).every(key => armorPieces.includes(key)),
@@ -28,8 +28,8 @@ export const characterFormSchema = z.object({
 });
 
 export const accountSchema = z.object({
-  chaseLevel: z.number().min(1).max(99),
-  cardCollectionLevel: z.number().min(1).max(99),
+  chaseLevel: z.number().min(1).max(1000),
+  cardCollectionLevel: z.number().min(1).max(2000),
   nickname: z.string().min(1).max(20),
   guildName: z.string().min(1).max(30).optional(),
 });
@@ -71,18 +71,7 @@ export const characterSchema = z.object({
   ),
 });
 
-export interface CharacterFormData {
-  level: number;
-  wlFloor: number;
-  totalAttack: number;
-  earrings: string;
-  runeSet1: string;
-  runeSet2: string;
-  ring: string;
-  voidPieces: Record<string, boolean>;
-  fullSR: Record<string, boolean>;
-}
-
-export type AccountData = z.infer<typeof accountSchema>;
-export type CharactersData = z.infer<typeof characterSchema>;
+export type AccountSpecificData = z.infer<typeof accountSchema>;
+export type CharacterSpecificData = z.infer<typeof characterFormSchema>;
+export type FullAccountData = z.infer<typeof characterSchema>;
 export type DisplaySettings = z.infer<typeof displaySettingsSchema>; 

@@ -1,13 +1,13 @@
+type ArmorTypeEnum = "helmet" | "upper" | "lower" | "gloves" | "shoes" | "cloak" | "weapon" | "upper-head-ornament" | "lower-head-ornament" | "upper-body-ornament" | "lower-body-ornament" | "arm-ornament";
+
 export interface Armor {
-  id: string;
+  id: ArmorTypeEnum;
   visualIcon: string;
   armorIcon: string;
   label: string;
 }
 
-export type ArmorMap = {
-  [key: string]: Armor;
-};
+export type ArmorMap = Record<ArmorTypeEnum, Armor>;
 
 export const armor: ArmorMap = {
   "helmet": {

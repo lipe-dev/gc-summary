@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Image from "next/image";
-import { CharacterFormData, CharactersData } from "@/schemas/character";
+import { CharacterSpecificData, FullAccountData } from "@/schemas/character";
 import { runes } from "@/constants/runes";
 import { RuneIcon } from "./RuneIcon";
 import { earrings } from "@/constants/earrings";
@@ -17,7 +15,7 @@ const formatAttack = (attack: number): string => {
   return `${Math.round(attack / 1000)}k`;
 };
 
-const getAttackColorClass = (attack: number, level: number, characters: CharactersData["characters"]): string => {
+const getAttackColorClass = (attack: number, level: number, characters: FullAccountData["characters"]): string => {
   if (level < 85) {
     return "text-blue-400";
   }
@@ -48,7 +46,7 @@ const getAttackColorClass = (attack: number, level: number, characters: Characte
   return "text-amber-600";
 };
 
-const getBorderColorClass = (attack: number, level: number, characters: CharactersData["characters"]): string => {
+const getBorderColorClass = (attack: number, level: number, characters: FullAccountData["characters"]): string => {
   if (level < 85) {
     return "border-blue-400";
   }
@@ -81,7 +79,7 @@ const getBorderColorClass = (attack: number, level: number, characters: Characte
 
 interface CharacterCardProps {
   character: { id: string; name: string };
-  data: CharacterFormData;
+  data: CharacterSpecificData;
   showLevel: boolean;
   showWlFloor: boolean;
   showTotalAttack: boolean;
@@ -91,7 +89,7 @@ interface CharacterCardProps {
   showRing: boolean;
   showVoidPieces: boolean;
   showFullSR: boolean;
-  characters: CharactersData["characters"];
+  characters: FullAccountData["characters"];
 }
 
 export function CharacterCard({ 
@@ -132,10 +130,10 @@ export function CharacterCard({
         />
       </div>
       <div className="flex items-center gap-2 mt-1">
-        {showEarrings && (
+        {showEarrings && data.earrings !== "in-progress" && (
           <EarringIcon earring={earrings[data.earrings]} size={20} />
         )}
-        {showRing && (
+        {showRing && data.ring !== "in-progress" && (
           <RingIcon ring={rings[data.ring]} size={20} />
         )}
         {(showRuneSet1 || showRuneSet2) && (data.runeSet1 !== "none" || data.runeSet2 !== "none") && (
@@ -155,13 +153,13 @@ export function CharacterCard({
         ))}
         {showFullSR && (
           <div className="flex items-center">
-            <Icon icon={armor.upper.visualIcon} className="text-yellow-400 text-xl" />
+            <Icon icon={armor.helmet.visualIcon} className="text-yellow-400 text-xl" />
             <span className="text-yellow-400">{fullSRCount}</span>
           </div>
         )}
         {showVoidPieces && (
           <div className="flex items-center">
-            <Icon icon={armor.upper.armorIcon} className="text-purple-400 text-xl" />
+            <Icon icon={armor.helmet.armorIcon} className="text-purple-400 text-xl" />
             <span className="text-purple-400">{voidCount}</span>
           </div>
         )}

@@ -1,7 +1,7 @@
-import { CharactersData } from "@/schemas/character";
+import { FullAccountData } from "@/schemas/character";
 
 interface AccountStatsProps {
-  data: CharactersData;
+  data: FullAccountData;
   showChaseLevel: boolean;
   showCardCollectionLevel: boolean;
   showNickname: boolean;

@@ -1,6 +1,6 @@
 import { Character } from "@/constants/characters";
 import { UseFormRegister, FieldErrors, Control, Controller } from "react-hook-form";
-import { CharactersData } from "@/schemas/character";
+import { FullAccountData } from "@/schemas/character";
 import { runes } from "@/constants/runes";
 import { rings } from "@/constants/rings";
 import { armor } from "@/constants/armor";
@@ -10,9 +10,9 @@ import Image from "next/image";
 
 interface CharacterFormFieldsetProps {
   character: Character;
-  register: UseFormRegister<CharactersData>;
-  control: Control<CharactersData>;
-  errors: FieldErrors<CharactersData>;
+  register: UseFormRegister<FullAccountData>;
+  control: Control<FullAccountData>;
+  errors: FieldErrors<FullAccountData>;
 }
 
 export function CharacterFormFieldset({ 
@@ -141,33 +141,33 @@ export function CharacterFormFieldset({
             </select>
             {errors.characters?.[character.id]?.ring && <span className="text-red-500 text-xs">{errors.characters[character.id]?.ring?.message}</span>}
           </div>
-          <div className="space-y-2">
-            <label className="block text-sm font-medium">Void Pieces</label>
-            <div className="grid grid-cols-2 gap-2">
-              {Object.entries(armor).map(([key, piece]) => (
+          <fieldset className="border border-gray-300 dark:border-gray-600 p-3 rounded">
+            <legend className="px-2 font-medium">Void Pieces</legend>
+            <div className="grid grid-cols-3 gap-2">
+              {Object.values(armor).map((piece) => (
                 <Controller
-                  key={key}
-                  name={`characters.${character.id}.voidPieces.${key}`}
+                  key={piece.id}
+                  name={`characters.${character.id}.voidPieces.${piece.id}`}
                   control={control}
                   defaultValue={false}
-                  render={({ field }) => (
-                    <div className="flex items-center gap-2">
+                  render={({ field: { value, onChange } }) => (
+                    <label
+                      className="flex flex-col items-center gap-1 cursor-pointer"
+                      onClick={() => onChange(!value)}
+                    >
                       <Icon
                         icon={piece.armorIcon}
-                        className={`text-xl ${field.value ? "text-purple-400" : "text-gray-400"}`}
+                        className={`text-2xl transition-colors ${
+                          value ? "text-purple-400" : "text-gray-400"
+                        } hover:opacity-80`}
                       />
-                      <input
-                        type="checkbox"
-                        checked={field.value}
-                        onChange={(e) => field.onChange(e.target.checked)}
-                        className="hidden"
-                      />
-                    </div>
+                      <span className="text-xs text-center">{piece.label}</span>
+                    </label>
                   )}
                 />
               ))}
             </div>
-          </div>
+          </fieldset>
           <fieldset className="border border-gray-300 dark:border-gray-600 p-3 rounded">
             <legend className="px-2 font-medium">SR</legend>
             <div className="grid grid-cols-3 gap-2">

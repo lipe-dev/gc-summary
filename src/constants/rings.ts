@@ -10,6 +10,12 @@ export type RingMap = {
 };
 
 export const rings: RingMap = {
+  "in-progress": {
+    id: "in-progress",
+    label: "Em Progresso",
+    color: "text-blue-300",
+    icon: "game-icons:ring"
+  },
   "faded-infinity-i": {
     id: "faded-infinity-i",
     label: "Infinito Esmaecido I",

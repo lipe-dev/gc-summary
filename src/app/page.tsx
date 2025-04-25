@@ -1,7 +1,7 @@
 "use client";
 
 import { characters } from "@/constants/characters";
-import { characterSchema, type CharacterFormData, type CharactersData, type DisplaySettings } from "@/schemas/character";
+import { characterSchema, type CharacterSpecificData, type FullAccountData, type DisplaySettings } from "@/schemas/character";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -12,15 +12,15 @@ import { CharacterFormFieldset } from "@/components/CharacterFormFieldset";
 
 const STORAGE_KEY = "gc-character-data";
 
-const defaultCharacterData: CharacterFormData = {
-  level: 1,
-  wlFloor: 1,
+const defaultCharacterData: CharacterSpecificData = {
+  level: 85,
+  wlFloor: 30,
   totalAttack: 0,
   earrings: "in-progress",
   runeSet1: "none",
   runeSet2: "none",
-  ring: "infinito-esmaecido-i",
-  voidPieces: 0,
+  ring: "in-progress",
+  voidPieces: {},
   fullSR: {}
 };
 
@@ -53,7 +53,7 @@ const defaultDisplaySettings: DisplaySettings = {
   },
 };
 
-const getDefaultValues = (): CharactersData => {
+const getDefaultValues = (): FullAccountData => {
   return {
     account: {
       chaseLevel: 1,
@@ -64,7 +64,7 @@ const getDefaultValues = (): CharactersData => {
     characters: Object.keys(characters).reduce((acc, characterKey) => {
       acc[characterKey] = defaultCharacterData;
       return acc;
-    }, {} as CharactersData["characters"])
+    }, {} as FullAccountData["characters"])
   };
 };
 
@@ -79,7 +79,7 @@ export default function Home() {
             errors: characterErrors
           }, 
           setValue: setCharacterValue, 
-        control } = useForm<CharactersData>({
+        control } = useForm<FullAccountData>({
     resolver: zodResolver(characterSchema),
     defaultValues: getDefaultValues()
   });
@@ -92,7 +92,7 @@ export default function Home() {
     const savedData = localStorage.getItem(STORAGE_KEY);
     if (savedData) {
       try {
-        const parsedData = JSON.parse(savedData) as Partial<CharactersData>;
+        const parsedData = JSON.parse(savedData) as Partial<FullAccountData>;
         // Set account values
         setCharacterValue("account.chaseLevel", parsedData.account?.chaseLevel || 1);
         setCharacterValue("account.cardCollectionLevel", parsedData.account?.cardCollectionLevel || 1);
@@ -118,7 +118,7 @@ export default function Home() {
     }
   }, [setCharacterValue]);
 
-  const onSubmit = (data: CharactersData) => {
+  const onSubmit = (data: FullAccountData) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     console.log("Data saved:", data);
   };

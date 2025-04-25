@@ -1,7 +1,10 @@
-import { CharactersData } from "@/schemas/character";
+import { FullAccountData } from "@/schemas/character";
+
+const MAX_VOID_PIECES = 7;
+const MAX_SR_PIECES = 12;
 
 interface CharacterStatsProps {
-  data: CharactersData;
+  data: FullAccountData;
   showLevel85Count: boolean;
   showFloor30Count: boolean;
   showOneMillionCount: boolean;
@@ -29,14 +32,16 @@ export function CharacterStats({
     c.earrings === "relic-set" || c.earrings === "chaos-set"
   ).length;
   const completedRingCount = Object.values(data.characters).filter(c => 
-    (c.ring.type === "promise") || 
-    (c.ring.level === "III" && c.ring.quality === "shiny")
+    (c.ring === "promise-iii") || 
+    (c.ring === "forged-infinity-iii")
   ).length;
+  // count how many characters have at least MAX_VOID_PIECES void pieces
   const fullVoidCount = Object.values(data.characters).filter(c => 
-    c.voidPieces === 7
+    Object.values(c.voidPieces).filter(Boolean).length >= MAX_VOID_PIECES
   ).length;
+  // count how many characters have at least MAX_SR_PIECES full SR pieces
   const fullSRCount = Object.values(data.characters).filter(c => 
-    c.fullSR
+    Object.values(c.fullSR).filter(Boolean).length >= MAX_SR_PIECES
   ).length;
 
   const summaryItems = [
