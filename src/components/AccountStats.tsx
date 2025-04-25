@@ -5,15 +5,17 @@ interface AccountStatsProps {
   showChaseLevel: boolean;
   showCardCollectionLevel: boolean;
   showNickname: boolean;
+  showGuildName: boolean;
 }
 
 export function AccountStats({ 
   data,
   showChaseLevel,
   showCardCollectionLevel,
-  showNickname
+  showNickname,
+  showGuildName
 }: AccountStatsProps) {
-  if (!showChaseLevel && !showCardCollectionLevel && !showNickname) return null;
+  if (!showChaseLevel && !showCardCollectionLevel && !showNickname && !showGuildName) return null;
 
   return (
     <div className="bg-gradient-to-br from-[#2a0000] to-[#3a0000] shadow relative flex flex-row items-center gap-4 p-4 pt-0">
@@ -32,9 +34,14 @@ export function AccountStats({
         </div>
       )}
 
-      {showNickname && (
+      {(showNickname || showGuildName) && (
         <div className="text-center ml-8">
-          <div className="text-3xl font-medium text-gray-200">{data.account.nickname}</div>
+          {showNickname && (
+            <div className="text-3xl font-medium text-gray-200">{data.account.nickname}</div>
+          )}
+          {showGuildName && data.account.guildName && (
+            <div className="text-xl font-light text-gray-400 pl-2">{data.account.guildName}</div>
+          )}
         </div>
       )}
     </div>

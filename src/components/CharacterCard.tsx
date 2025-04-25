@@ -72,7 +72,7 @@ const getBorderColorClass = (attack: number, level: number, characters: Characte
 };
 
 interface CharacterCardProps {
-  character: { key: string; name: string };
+  character: { id: string; name: string };
   data: CharacterFormData;
   showLevel: boolean;
   showWlFloor: boolean;
@@ -117,7 +117,7 @@ export function CharacterCard({
       )}
       <div className={`flex items-center justify-center object-cover w-24 h-24 relative border-4 ${getBorderColorClass(data.totalAttack, data.level, characters)} rounded-2xl overflow-hidden`}>
         <img
-          src={`/characters/${character.key}.png`}
+          src={`/characters/${character.id}.png`}
           alt={character.name}
           className="object-cover w-[120%] h-[120%]"
         />

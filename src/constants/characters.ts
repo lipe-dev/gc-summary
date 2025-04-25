@@ -1,123 +1,127 @@
 export interface Character {
+  id: string;
   name: string;
   profilePicture: string;
-  key: string;
 }
 
-export const characters: Character[] = [
-  {
+export type CharacterMap = {
+  [key: string]: Character;
+};
+
+export const characters: CharacterMap = {
+  elesis: {
+    id: "elesis",
     name: "Elesis",
-    profilePicture: "/characters/elesis.jpg",
-    key: "elesis"
+    profilePicture: "/characters/elesis.png"
   },
-  {
+  lire: {
+    id: "lire",
     name: "Lire",
-    profilePicture: "/characters/lire.jpg",
-    key: "lire"
+    profilePicture: "/characters/lire.png"
   },
-  {
+  arme: {
+    id: "arme",
     name: "Arme",
-    profilePicture: "/characters/arme.jpg",
-    key: "arme"
+    profilePicture: "/characters/arme.png"
   },
-  {
+  lass: {
+    id: "lass",
     name: "Lass",
-    profilePicture: "/characters/lass.jpg",
-    key: "lass"
+    profilePicture: "/characters/lass.png"
   },
-  {
+  ryan: {
+    id: "ryan",
     name: "Ryan",
-    profilePicture: "/characters/ryan.jpg",
-    key: "ryan"
+    profilePicture: "/characters/ryan.png"
   },
-  {
+  ronan: {
+    id: "ronan",
     name: "Ronan",
-    profilePicture: "/characters/ronan.jpg",
-    key: "ronan"
+    profilePicture: "/characters/ronan.png"
   },
-  {
+  amy: {
+    id: "amy",
     name: "Amy",
-    profilePicture: "/characters/amy.jpg",
-    key: "amy"
+    profilePicture: "/characters/amy.png"
   },
-  {
+  jin: {
+    id: "jin",
     name: "Jin",
-    profilePicture: "/characters/jin.jpg",
-    key: "jin"
+    profilePicture: "/characters/jin.png"
   },
-  {
+  sieghart: {
+    id: "sieghart",
     name: "Sieghart",
-    profilePicture: "/characters/sieghart.jpg",
-    key: "sieghart"
+    profilePicture: "/characters/sieghart.png"
   },
-  {
+  mari: {
+    id: "mari",
     name: "Mari",
-    profilePicture: "/characters/mari.jpg",
-    key: "mari"
+    profilePicture: "/characters/mari.png"
   },
-  {
+  dio: {
+    id: "dio",
     name: "Dio",
-    profilePicture: "/characters/dio.jpg",
-    key: "dio"
+    profilePicture: "/characters/dio.png"
   },
-  {
+  zero: {
+    id: "zero",
     name: "Zero",
-    profilePicture: "/characters/zero.jpg",
-    key: "zero"
+    profilePicture: "/characters/zero.png"
   },
-  {
+  rey: {
+    id: "rey",
     name: "Rey",
-    profilePicture: "/characters/rey.jpg",
-    key: "rey"
+    profilePicture: "/characters/rey.png"
   },
-  {
+  lupus: {
+    id: "lupus",
     name: "Lupus",
-    profilePicture: "/characters/lupus.jpg",
-    key: "lupus"
+    profilePicture: "/characters/lupus.png"
   },
-  {
+  lin: {
+    id: "lin",
     name: "Lin",
-    profilePicture: "/characters/lin.jpg",
-    key: "lin"
+    profilePicture: "/characters/lin.png"
   },
-  {
+  azin: {
+    id: "azin",
     name: "Azin",
-    profilePicture: "/characters/azin.jpg",
-    key: "azin"
+    profilePicture: "/characters/azin.png"
   },
-  {
+  holy: {
+    id: "holy",
     name: "Holy",
-    profilePicture: "/characters/holy.jpg",
-    key: "holy"
+    profilePicture: "/characters/holy.png"
   },
-  {
+  edel: {
+    id: "edel",
     name: "Edel",
-    profilePicture: "/characters/edel.jpg",
-    key: "edel"
+    profilePicture: "/characters/edel.png"
   },
-  {
+  veigas: {
+    id: "veigas",
     name: "Veigas",
-    profilePicture: "/characters/veigas.jpg",
-    key: "veigas"
+    profilePicture: "/characters/veigas.png"
   },
-  {
+  ai: {
+    id: "ai",
     name: "Ai",
-    profilePicture: "/characters/ai.jpg",
-    key: "ai"
+    profilePicture: "/characters/ai.png"
   },
-  {
+  decane: {
+    id: "decane",
     name: "Decane",
-    profilePicture: "/characters/decane.jpg",
-    key: "decane"
+    profilePicture: "/characters/decane.png"
   },
-  {
+  kallia: {
+    id: "kallia",
     name: "Kallia",
-    profilePicture: "/characters/kallia.jpg",
-    key: "kallia"
+    profilePicture: "/characters/kallia.png"
   },
-  {
+  uno: {
+    id: "uno",
     name: "Uno",
-    profilePicture: "/characters/uno.jpg",
-    key: "uno"
-  },
-]; 
+    profilePicture: "/characters/uno.png"
+  }
+}; 

@@ -23,6 +23,7 @@ export const accountSchema = z.object({
   chaseLevel: z.number().min(1).max(99),
   cardCollectionLevel: z.number().min(1).max(99),
   nickname: z.string().min(1).max(20),
+  guildName: z.string().min(1).max(30).optional(),
 });
 
 export const displaySettingsSchema = z.object({
@@ -30,6 +31,7 @@ export const displaySettingsSchema = z.object({
     chaseLevel: z.boolean(),
     cardCollectionLevel: z.boolean(),
     nickname: z.boolean(),
+    guildName: z.boolean(),
   }),
   character: z.object({
     level: z.boolean(),
@@ -56,7 +58,7 @@ export const displaySettingsSchema = z.object({
 export const characterSchema = z.object({
   account: accountSchema,
   characters: z.record(
-    z.enum(characters.map(c => c.key) as [string, ...string[]]),
+    z.enum(Object.values(characters).map(c => c.id) as [string, ...string[]]),
     characterFormSchema
   ),
 });
