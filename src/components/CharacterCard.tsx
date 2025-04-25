@@ -110,10 +110,10 @@ export function CharacterCard({
 }: CharacterCardProps) {
   const cardItems = [
     { show: showWlFloor, value: `${data.wlFloor}F` },
-    { show: showVoidPieces, value: data.voidPieces }
   ].filter(item => item.show);
 
   const fullSRCount = Object.values(data.fullSR).filter(Boolean).length;
+  const voidCount = Object.values(data.voidPieces).filter(Boolean).length;
 
   return (
     <div className="rounded-lg shadow flex flex-col items-center p-0">
@@ -154,9 +154,15 @@ export function CharacterCard({
           </div>
         ))}
         {showFullSR && (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center">
             <Icon icon={armor.upper.visualIcon} className="text-yellow-400 text-xl" />
             <span className="text-yellow-400">{fullSRCount}</span>
+          </div>
+        )}
+        {showVoidPieces && (
+          <div className="flex items-center">
+            <Icon icon={armor.upper.armorIcon} className="text-purple-400 text-xl" />
+            <span className="text-purple-400">{voidCount}</span>
           </div>
         )}
       </div>

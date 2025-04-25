@@ -20,7 +20,7 @@ export const characterFormSchema = z.object({
   runeSet1: z.enum(["none", ...Object.keys(runes)]),
   runeSet2: z.enum(["none", ...Object.keys(runes)]),
   ring: z.enum(Object.keys(rings) as [string, ...string[]]),
-  voidPieces: z.number().min(0).max(7),
+  voidPieces: z.record(z.boolean()),
   fullSR: z.record(z.boolean()).refine(
     (obj) => Object.keys(obj).every(key => armorPieces.includes(key)),
     "Invalid armor piece"
@@ -71,7 +71,18 @@ export const characterSchema = z.object({
   ),
 });
 
-export type CharacterFormData = z.infer<typeof characterFormSchema>;
+export interface CharacterFormData {
+  level: number;
+  wlFloor: number;
+  totalAttack: number;
+  earrings: string;
+  runeSet1: string;
+  runeSet2: string;
+  ring: string;
+  voidPieces: Record<string, boolean>;
+  fullSR: Record<string, boolean>;
+}
+
 export type AccountData = z.infer<typeof accountSchema>;
 export type CharactersData = z.infer<typeof characterSchema>;
 export type DisplaySettings = z.infer<typeof displaySettingsSchema>; 

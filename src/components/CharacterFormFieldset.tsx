@@ -141,17 +141,32 @@ export function CharacterFormFieldset({
             </select>
             {errors.characters?.[character.id]?.ring && <span className="text-red-500 text-xs">{errors.characters[character.id]?.ring?.message}</span>}
           </div>
-          <div>
-            <label htmlFor={`${character.id}-void-pieces`} className="block text-sm">Void Pieces</label>
-            <input
-              type="number"
-              id={`${character.id}-void-pieces`}
-              min="0"
-              max="7"
-              {...register(`characters.${character.id}.voidPieces`, { valueAsNumber: true })}
-              className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-            />
-            {errors.characters?.[character.id]?.voidPieces && <span className="text-red-500 text-xs">{errors.characters[character.id]?.voidPieces?.message}</span>}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Void Pieces</label>
+            <div className="grid grid-cols-2 gap-2">
+              {Object.entries(armor).map(([key, piece]) => (
+                <Controller
+                  key={key}
+                  name={`characters.${character.id}.voidPieces.${key}`}
+                  control={control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        icon={piece.armorIcon}
+                        className={`text-xl ${field.value ? "text-purple-400" : "text-gray-400"}`}
+                      />
+                      <input
+                        type="checkbox"
+                        checked={field.value}
+                        onChange={(e) => field.onChange(e.target.checked)}
+                        className="hidden"
+                      />
+                    </div>
+                  )}
+                />
+              ))}
+            </div>
           </div>
           <fieldset className="border border-gray-300 dark:border-gray-600 p-3 rounded">
             <legend className="px-2 font-medium">SR</legend>
