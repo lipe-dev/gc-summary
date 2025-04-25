@@ -2,6 +2,9 @@ import { z } from "zod";
 import { characters } from "@/constants/characters";
 import { runes } from "@/constants/runes";
 import { rings } from "@/constants/rings";
+import { armor } from "@/constants/armor";
+
+const armorPieces = Object.keys(armor) as [string, ...string[]];
 
 export const ringSchema = z.object({
   type: z.enum(["dimensional", "infinity", "promise"]),
@@ -18,7 +21,10 @@ export const characterFormSchema = z.object({
   runeSet2: z.enum(["none", ...Object.keys(runes)]),
   ring: z.enum(Object.keys(rings) as [string, ...string[]]),
   voidPieces: z.number().min(0).max(7),
-  fullSR: z.boolean(),
+  fullSR: z.record(z.boolean()).refine(
+    (obj) => Object.keys(obj).every(key => armorPieces.includes(key)),
+    "Invalid armor piece"
+  ),
 });
 
 export const accountSchema = z.object({

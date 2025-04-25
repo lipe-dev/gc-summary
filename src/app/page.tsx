@@ -21,7 +21,7 @@ const defaultCharacterData: CharacterFormData = {
   runeSet2: "none",
   ring: "infinito-esmaecido-i",
   voidPieces: 0,
-  fullSR: false
+  fullSR: {}
 };
 
 const defaultDisplaySettings: DisplaySettings = {
@@ -72,7 +72,14 @@ export default function Home() {
   const [showCharacterSidebar, setShowCharacterSidebar] = useState(true);
   const [showDisplaySidebar, setShowDisplaySidebar] = useState(true);
 
-  const { register: registerCharacter, handleSubmit: handleCharacterSubmit, watch: watchCharacter, formState: { errors: characterErrors }, setValue: setCharacterValue } = useForm<CharactersData>({
+  const { register: registerCharacter, 
+          handleSubmit: handleCharacterSubmit, 
+          watch: watchCharacter, 
+          formState: { 
+            errors: characterErrors
+          }, 
+          setValue: setCharacterValue, 
+        control } = useForm<CharactersData>({
     resolver: zodResolver(characterSchema),
     defaultValues: getDefaultValues()
   });
@@ -195,6 +202,7 @@ export default function Home() {
                     key={character.id}
                     character={character}
                     register={registerCharacter}
+                    control={control}
                     errors={characterErrors}
                   />
                 ))}
@@ -342,7 +350,6 @@ export default function Home() {
                     .sort((a, b) => b.data.totalAttack - a.data.totalAttack)
                     .map(({ character, data: characterData }) => (
                       <CharacterCard
-                        key={character.id}
                         character={character}
                         data={characterData}
                         showLevel={displaySettings.character.level}
@@ -354,6 +361,8 @@ export default function Home() {
                         showRing={displaySettings.character.ring}
                         showVoidPieces={displaySettings.character.voidPieces}
                         characters={allCharactersData.characters}
+                        key={character.id}
+                        showFullSR={displaySettings.character.fullSR}
                       />
                     ))}
                 </div>

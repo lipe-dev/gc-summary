@@ -7,6 +7,8 @@ import { earrings } from "@/constants/earrings";
 import { EarringIcon } from "./EarringIcon";
 import { rings } from "@/constants/rings";
 import { RingIcon } from "./RingIcon";
+import { armor } from "@/constants/armor";
+import { Icon } from "@iconify/react";
 
 const formatAttack = (attack: number): string => {
   if (attack >= 1000000) {
@@ -88,6 +90,7 @@ interface CharacterCardProps {
   showRuneSet2: boolean;
   showRing: boolean;
   showVoidPieces: boolean;
+  showFullSR: boolean;
   characters: CharactersData["characters"];
 }
 
@@ -102,12 +105,15 @@ export function CharacterCard({
   showRuneSet2,
   showRing,
   showVoidPieces,
-  characters
+  characters,
+  showFullSR
 }: CharacterCardProps) {
   const cardItems = [
     { show: showWlFloor, value: `${data.wlFloor}F` },
     { show: showVoidPieces, value: data.voidPieces }
   ].filter(item => item.show);
+
+  const fullSRCount = Object.values(data.fullSR).filter(Boolean).length;
 
   return (
     <div className="rounded-lg shadow flex flex-col items-center p-0">
@@ -142,13 +148,17 @@ export function CharacterCard({
             )}
           </>
         )}
-      </div>
-      <div className="text-sm space-y-1 w-full">
         {cardItems.map((item, index) => (
           <div key={index} className="flex items-center gap-1">
             <span className="text-white">{item.value}</span>
           </div>
         ))}
+        {showFullSR && (
+          <div className="flex items-center gap-1">
+            <Icon icon={armor.upper.visualIcon} className="text-yellow-400 text-xl" />
+            <span className="text-yellow-400">{fullSRCount}</span>
+          </div>
+        )}
       </div>
     </div>
   );

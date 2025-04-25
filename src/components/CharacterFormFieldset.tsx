@@ -1,8 +1,9 @@
 import { Character } from "@/constants/characters";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { UseFormRegister, FieldErrors, Control, Controller } from "react-hook-form";
 import { CharactersData } from "@/schemas/character";
 import { runes } from "@/constants/runes";
 import { rings } from "@/constants/rings";
+import { armor } from "@/constants/armor";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import Image from "next/image";
@@ -10,12 +11,14 @@ import Image from "next/image";
 interface CharacterFormFieldsetProps {
   character: Character;
   register: UseFormRegister<CharactersData>;
+  control: Control<CharactersData>;
   errors: FieldErrors<CharactersData>;
 }
 
 export function CharacterFormFieldset({ 
   character, 
-  register, 
+  register,
+  control,
   errors
 }: CharacterFormFieldsetProps) {
   const [isOpen, setIsOpen] = useState(true);
@@ -150,18 +153,33 @@ export function CharacterFormFieldset({
             />
             {errors.characters?.[character.id]?.voidPieces && <span className="text-red-500 text-xs">{errors.characters[character.id]?.voidPieces?.message}</span>}
           </div>
-          <div>
-            <label htmlFor={`${character.id}-full-sr`} className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id={`${character.id}-full-sr`}
-                {...register(`characters.${character.id}.fullSR`)}
-                className="w-4 h-4 border rounded dark:bg-gray-700 dark:border-gray-600"
-              />
-              <span className="text-sm">Full SR</span>
-            </label>
-            {errors.characters?.[character.id]?.fullSR && <span className="text-red-500 text-xs">{errors.characters[character.id]?.fullSR?.message}</span>}
-          </div>
+          <fieldset className="border border-gray-300 dark:border-gray-600 p-3 rounded">
+            <legend className="px-2 font-medium">SR</legend>
+            <div className="grid grid-cols-3 gap-2">
+              {Object.values(armor).map((piece) => (
+                <Controller
+                  key={piece.id}
+                  name={`characters.${character.id}.fullSR.${piece.id}`}
+                  control={control}
+                  defaultValue={false}
+                  render={({ field: { value, onChange } }) => (
+                    <label
+                      className="flex flex-col items-center gap-1 cursor-pointer"
+                      onClick={() => onChange(!value)}
+                    >
+                      <Icon
+                        icon={piece.visualIcon}
+                        className={`text-2xl transition-colors ${
+                          value ? "text-yellow-400" : "text-gray-400"
+                        } hover:opacity-80`}
+                      />
+                      <span className="text-xs text-center">{piece.label}</span>
+                    </label>
+                  )}
+                />
+              ))}
+            </div>
+          </fieldset>
         </div>
       )}
     </fieldset>
