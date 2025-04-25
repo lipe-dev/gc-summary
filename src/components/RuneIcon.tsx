@@ -13,16 +13,15 @@ export function RuneIcon({ rune, size = 24, className = "" }: RuneIconProps) {
   const translateY = -((size * (scale - 1)) / 4);
 
   return (
-    <div className={clsx("flex items-center justify-center", className)}>
       <Icon
         icon={rune.icon}
         width={size}
         height={size}
-        className="fill-cyan-300 text-cyan-300"
+        className={clsx("flex items-center justify-center fill-cyan-300 text-cyan-300", className)}
         style={{ 
           transform: `rotate(${rune.rotation}deg) ${rune.inverted ? "scaleX(-1)" : ""} scale(${scale}) translateY(${translateY}px)` 
         }}
       />
-    </div>
+
   );
 } 

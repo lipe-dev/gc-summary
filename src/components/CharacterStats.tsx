@@ -45,9 +45,9 @@ export function CharacterStats({
   ).length;
 
   const summaryItems = [
-    { show: showLevel85Count, value: `${level85Count}/${totalCharacters}`, label: "Level 85+" },
-    { show: showFloor30Count, value: `${floor30Count}/${totalCharacters}`, label: "Floor 30+" },
-    { show: showOneMillionCount, value: `${oneMillionCount}/${totalCharacters}`, label: "1M+ Attack" },
+    { show: showLevel85Count, value: `${level85Count}/${totalCharacters}`, label: "Level 85" },
+    { show: showFloor30Count, value: `${floor30Count}/${totalCharacters}`, label: "Floor 30" },
+    { show: showOneMillionCount, value: `${oneMillionCount}/${totalCharacters}`, label: "1kk+ Attack" },
     { show: showRelicChaosRingCount, value: `${relicChaosRingCount}/${totalCharacters}`, label: "Top Earrings" },
     { show: showCompletedRingCount, value: `${completedRingCount}/${totalCharacters}`, label: "Top Rings" },
     { show: showFullVoidCount, value: `${fullVoidCount}/${totalCharacters}`, label: "Full Void" },

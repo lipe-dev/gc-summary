@@ -331,7 +331,7 @@ export default function Home() {
             </aside>
 
             {/* Main content */}
-            <main className="overflow-y-auto p-8">
+            <main className="overflow-y-auto p-8 w-full">
               <div className="w-[1024px] bg-gradient-to-br from-[#1a0000] to-[#2a0000] rounded-lg shadow-lg p-0">
                 <AccountStats 
                   data={allCharactersData}

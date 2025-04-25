@@ -10,9 +10,16 @@ import { Icon } from "@iconify/react";
 
 const formatAttack = (attack: number): string => {
   if (attack >= 1000000) {
-    return `${(attack / 1000000).toFixed(3)}kk`;
+    const millions = attack / 1000000;
+    const formatted = millions.toFixed(3).replace(/\.?0+$/, '');
+    return `${formatted}M`;
   }
-  return `${Math.round(attack / 1000)}k`;
+  if (attack >= 1000) {
+    const thousands = attack / 1000;
+    const formatted = thousands.toFixed(3).replace(/\.?0+$/, '');
+    return `${formatted}K`;
+  }
+  return attack.toString();
 };
 
 const getAttackColorClass = (attack: number, level: number, characters: FullAccountData["characters"]): string => {
@@ -129,7 +136,7 @@ export function CharacterCard({
           className="object-cover w-[120%] h-[120%]"
         />
       </div>
-      <div className="flex items-center gap-2 mt-1">
+      <div className="flex items-center gap-1 -mt-2 flex-wrap justify-center w-11/12 bg-gradient-to-br from-[#0a0000] to-[#1a0000] rounded-b-lg pt-3 px-1">
         {showEarrings && data.earrings !== "in-progress" && (
           <EarringIcon earring={earrings[data.earrings]} size={20} />
         )}
@@ -139,10 +146,10 @@ export function CharacterCard({
         {(showRuneSet1 || showRuneSet2) && (data.runeSet1 !== "none" || data.runeSet2 !== "none") && (
           <>
             {data.runeSet1 !== "none" && showRuneSet1 && (
-              <RuneIcon rune={runes[data.runeSet1]} size={20} />
+              <RuneIcon rune={runes[data.runeSet1]} size={16} />
             )}
             {data.runeSet2 !== "none" && showRuneSet2 && (
-              <RuneIcon rune={runes[data.runeSet2]} size={20} />
+              <RuneIcon rune={runes[data.runeSet2]} size={16} />
             )}
           </>
         )}
