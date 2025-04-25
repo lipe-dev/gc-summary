@@ -9,6 +9,7 @@ import { AccountStats } from "@/components/AccountStats";
 import { CharacterCard } from "@/components/CharacterCard";
 import { CharacterStats } from "@/components/CharacterStats";
 import { runes } from "@/constants/runes";
+import { rings } from "@/constants/rings";
 
 const STORAGE_KEY = "gc-character-data";
 
@@ -19,11 +20,7 @@ const defaultCharacterData: CharacterFormData = {
   earrings: "in-progress",
   runeSet1: "none",
   runeSet2: "none",
-  ring: {
-    type: "dimensional",
-    level: "I",
-    quality: "faded"
-  },
+  ring: "infinito-esmaecido-i",
   voidPieces: 0,
   fullSR: false
 };
@@ -89,16 +86,16 @@ export default function Home() {
     const savedData = localStorage.getItem(STORAGE_KEY);
     if (savedData) {
       try {
-        const parsedData = JSON.parse(savedData) as CharactersData;
+        const parsedData = JSON.parse(savedData) as Partial<CharactersData>;
         // Set account values
-        setCharacterValue("account.chaseLevel", parsedData.account.chaseLevel);
-        setCharacterValue("account.cardCollectionLevel", parsedData.account.cardCollectionLevel);
-        setCharacterValue("account.nickname", parsedData.account.nickname);
-        setCharacterValue("account.guildName", parsedData.account.guildName);
+        setCharacterValue("account.chaseLevel", parsedData.account?.chaseLevel || 1);
+        setCharacterValue("account.cardCollectionLevel", parsedData.account?.cardCollectionLevel || 1);
+        setCharacterValue("account.nickname", parsedData.account?.nickname || "");
+        setCharacterValue("account.guildName", parsedData.account?.guildName || "");
         
         // Set values for each character
         Object.keys(characters).forEach(characterKey => {
-          const characterData = parsedData.characters[characterKey] || defaultCharacterData;
+          const characterData = parsedData.characters?.[characterKey] || defaultCharacterData;
           setCharacterValue(`characters.${characterKey}.level`, characterData.level);
           setCharacterValue(`characters.${characterKey}.wlFloor`, characterData.wlFloor);
           setCharacterValue(`characters.${characterKey}.totalAttack`, characterData.totalAttack);
@@ -195,7 +192,6 @@ export default function Home() {
 
                 {/* Characters Section */}
                 {Object.values(characters).map((character) => {
-                  const ringType = watchCharacter(`characters.${character.id}.ring.type`);
                   return (
                     <fieldset key={character.id} className="border border-gray-300 dark:border-gray-600 p-3 rounded">
                       <legend className="px-2 font-medium">{character.name}</legend>
@@ -281,39 +277,19 @@ export default function Home() {
                           </select>
                           {characterErrors.characters?.[character.id]?.runeSet2 && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.runeSet2?.message}</span>}
                         </div>
-                        <div className="space-y-2">
-                          <label className="block text-sm">Ring</label>
-                          <div className="grid grid-cols-3 gap-2">
-                            <select
-                              id={`${character.id}-ring-type`}
-                              {...registerCharacter(`characters.${character.id}.ring.type`)}
-                              className="p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                            >
-                              <option value="dimensional">Dimensional</option>
-                              <option value="infinity">Infinity</option>
-                              <option value="promise">Promise</option>
-                            </select>
-                            <select
-                              id={`${character.id}-ring-level`}
-                              {...registerCharacter(`characters.${character.id}.ring.level`)}
-                              className="p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                            >
-                              <option value="I">I</option>
-                              <option value="II">II</option>
-                              <option value="III">III</option>
-                            </select>
-                            {ringType !== "promise" && (
-                              <select
-                                id={`${character.id}-ring-quality`}
-                                {...registerCharacter(`characters.${character.id}.ring.quality`)}
-                                className="p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                              >
-                                <option value="faded">Faded</option>
-                                <option value="processed">Processed</option>
-                                <option value="shiny">Shiny</option>
-                              </select>
-                            )}
-                          </div>
+                        <div>
+                          <label htmlFor={`${character.id}-ring`} className="block text-sm">Ring</label>
+                          <select
+                            id={`${character.id}-ring`}
+                            {...registerCharacter(`characters.${character.id}.ring`)}
+                            className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
+                          >
+                            {Object.values(rings).map((ring) => (
+                              <option key={ring.id} value={ring.id}>
+                                {ring.label}
+                              </option>
+                            ))}
+                          </select>
                           {characterErrors.characters?.[character.id]?.ring && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.ring?.message}</span>}
                         </div>
                         <div>

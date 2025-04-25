@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { characters } from "@/constants/characters";
 import { runes } from "@/constants/runes";
+import { rings } from "@/constants/rings";
 
 export const ringSchema = z.object({
   type: z.enum(["dimensional", "infinity", "promise"]),
@@ -15,7 +16,7 @@ export const characterFormSchema = z.object({
   earrings: z.enum(["in-progress", "epic-set", "relic-set", "chaos-set"]),
   runeSet1: z.enum(["none", ...Object.keys(runes)]),
   runeSet2: z.enum(["none", ...Object.keys(runes)]),
-  ring: ringSchema,
+  ring: z.enum(Object.keys(rings) as [string, ...string[]]),
   voidPieces: z.number().min(0).max(7),
   fullSR: z.boolean(),
 });
