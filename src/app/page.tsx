@@ -8,8 +8,7 @@ import { useForm } from "react-hook-form";
 import { AccountStats } from "@/components/AccountStats";
 import { CharacterCard } from "@/components/CharacterCard";
 import { CharacterStats } from "@/components/CharacterStats";
-import { runes } from "@/constants/runes";
-import { rings } from "@/constants/rings";
+import { CharacterFormFieldset } from "@/components/CharacterFormFieldset";
 
 const STORAGE_KEY = "gc-character-data";
 
@@ -191,133 +190,14 @@ export default function Home() {
                 </fieldset>
 
                 {/* Characters Section */}
-                {Object.values(characters).map((character) => {
-                  return (
-                    <fieldset key={character.id} className="border border-gray-300 dark:border-gray-600 p-3 rounded">
-                      <legend className="px-2 font-medium">{character.name}</legend>
-                      <div className="space-y-2">
-                        <div>
-                          <label htmlFor={`${character.id}-level`} className="block text-sm">Level</label>
-                          <input
-                            type="number"
-                            id={`${character.id}-level`}
-                            {...registerCharacter(`characters.${character.id}.level`, { valueAsNumber: true })}
-                            className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                          />
-                          {characterErrors.characters?.[character.id]?.level && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.level?.message}</span>}
-                        </div>
-                        <div>
-                          <label htmlFor={`${character.id}-wl`} className="block text-sm">WL Floor</label>
-                          <select
-                            id={`${character.id}-wl`}
-                            {...registerCharacter(`characters.${character.id}.wlFloor`, { valueAsNumber: true })}
-                            className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                          >
-                            {Array.from({ length: 30 }, (_, i) => i + 1).map((floor) => (
-                              <option key={floor} value={floor}>
-                                {floor}
-                              </option>
-                            ))}
-                          </select>
-                          {characterErrors.characters?.[character.id]?.wlFloor && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.wlFloor?.message}</span>}
-                        </div>
-                        <div>
-                          <label htmlFor={`${character.id}-ta`} className="block text-sm">Total Attack</label>
-                          <input
-                            type="number"
-                            id={`${character.id}-ta`}
-                            {...registerCharacter(`characters.${character.id}.totalAttack`, { valueAsNumber: true })}
-                            className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                          />
-                          {characterErrors.characters?.[character.id]?.totalAttack && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.totalAttack?.message}</span>}
-                        </div>
-                        <div>
-                          <label htmlFor={`${character.id}-earrings`} className="block text-sm">Earrings</label>
-                          <select
-                            id={`${character.id}-earrings`}
-                            {...registerCharacter(`characters.${character.id}.earrings`)}
-                            className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                          >
-                            <option value="in-progress">In Progress</option>
-                            <option value="epic-set">Epic Set</option>
-                            <option value="relic-set">Relic Set</option>
-                            <option value="chaos-set">Chaos Set</option>
-                          </select>
-                          {characterErrors.characters?.[character.id]?.earrings && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.earrings?.message}</span>}
-                        </div>
-                        <div>
-                          <label htmlFor={`${character.id}-rune1`} className="block text-sm">Rune Set 1</label>
-                          <select
-                            id={`${character.id}-rune1`}
-                            {...registerCharacter(`characters.${character.id}.runeSet1`)}
-                            className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                          >
-                            <option value="none">None</option>
-                            {Object.values(runes).map((rune) => (
-                              <option key={rune.id} value={rune.id}>
-                                {rune.label}
-                              </option>
-                            ))}
-                          </select>
-                          {characterErrors.characters?.[character.id]?.runeSet1 && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.runeSet1?.message}</span>}
-                        </div>
-                        <div>
-                          <label htmlFor={`${character.id}-rune2`} className="block text-sm">Rune Set 2</label>
-                          <select
-                            id={`${character.id}-rune2`}
-                            {...registerCharacter(`characters.${character.id}.runeSet2`)}
-                            className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                          >
-                            <option value="none">None</option>
-                            {Object.values(runes).map((rune) => (
-                              <option key={rune.id} value={rune.id}>
-                                {rune.label}
-                              </option>
-                            ))}
-                          </select>
-                          {characterErrors.characters?.[character.id]?.runeSet2 && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.runeSet2?.message}</span>}
-                        </div>
-                        <div>
-                          <label htmlFor={`${character.id}-ring`} className="block text-sm">Ring</label>
-                          <select
-                            id={`${character.id}-ring`}
-                            {...registerCharacter(`characters.${character.id}.ring`)}
-                            className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                          >
-                            {Object.values(rings).map((ring) => (
-                              <option key={ring.id} value={ring.id}>
-                                {ring.label}
-                              </option>
-                            ))}
-                          </select>
-                          {characterErrors.characters?.[character.id]?.ring && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.ring?.message}</span>}
-                        </div>
-                        <div>
-                          <label htmlFor={`${character.id}-void-pieces`} className="block text-sm">Void Pieces</label>
-                          <input
-                            type="number"
-                            id={`${character.id}-void-pieces`}
-                            min="0"
-                            max="7"
-                            {...registerCharacter(`characters.${character.id}.voidPieces`, { valueAsNumber: true })}
-                            className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                          />
-                          {characterErrors.characters?.[character.id]?.voidPieces && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.voidPieces?.message}</span>}
-                        </div>
-                        <div>
-                          <label htmlFor={`${character.id}-full-sr`} className="block text-sm">Full SR</label>
-                          <input
-                            type="checkbox"
-                            id={`${character.id}-full-sr`}
-                            {...registerCharacter(`characters.${character.id}.fullSR`)}
-                            className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
-                          />
-                          {characterErrors.characters?.[character.id]?.fullSR && <span className="text-red-500 text-xs">{characterErrors.characters[character.id]?.fullSR?.message}</span>}
-                        </div>
-                      </div>
-                    </fieldset>
-                  );
-                })}
+                {Object.values(characters).map((character) => (
+                  <CharacterFormFieldset
+                    key={character.id}
+                    character={character}
+                    register={registerCharacter}
+                    errors={characterErrors}
+                  />
+                ))}
                 <div className="flex gap-2">
                   <button
                     type="submit"
