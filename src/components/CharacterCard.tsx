@@ -16,7 +16,7 @@ const formatAttack = (attack: number): string => {
   }
   if (attack >= 1000) {
     const thousands = attack / 1000;
-    const formatted = thousands.toFixed(3).replace(/\.?0+$/, '');
+    const formatted = thousands.toFixed(0).replace(/\.?0+$/, '');
     return `${formatted}K`;
   }
   return attack.toString();
@@ -121,7 +121,7 @@ export function CharacterCard({
   const voidCount = Object.values(data.voidPieces).filter(Boolean).length;
 
   return (
-    <div className="rounded-lg shadow flex flex-col items-center p-0">
+    <a href={`#${character.id}`} className="rounded-lg shadow flex flex-col items-center p-0">
       {(showLevel || showTotalAttack) && (
         <div className="bg-gradient-to-br from-[#0a0000] to-[#1a0000] rounded-t-lg p-1 pb-0">
           <div className={`text-2xl font-medium ${getAttackColorClass(data.totalAttack, data.level, characters)}`}>
@@ -171,6 +171,6 @@ export function CharacterCard({
           </div>
         )}
       </div>
-    </div>
+    </a>
   );
 } 

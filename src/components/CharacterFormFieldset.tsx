@@ -24,7 +24,7 @@ export function CharacterFormFieldset({
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <fieldset key={character.id} className="border border-gray-300 dark:border-gray-600 p-3 rounded">
+    <fieldset id={character.id} className="border border-gray-300 dark:border-gray-600 p-3 rounded">
       <legend className="px-2 font-medium flex items-center gap-2">
         <button
           type="button"

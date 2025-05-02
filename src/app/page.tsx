@@ -9,6 +9,7 @@ import { AccountStats } from "@/components/AccountStats";
 import { CharacterCard } from "@/components/CharacterCard";
 import { CharacterStats } from "@/components/CharacterStats";
 import { CharacterFormFieldset } from "@/components/CharacterFormFieldset";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const STORAGE_KEY = "gc-character-data";
 
@@ -129,26 +130,18 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0000] to-[#1a0000] text-white">
         <div className="h-screen flex flex-col">
-          {/* Top bar with toggle buttons */}
-          <div className="bg-gray-100 dark:bg-gray-800 p-2 flex gap-2">
-            <button
-              onClick={() => setShowCharacterSidebar(!showCharacterSidebar)}
-              className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition-colors text-sm"
-            >
-              {showCharacterSidebar ? 'Hide Character Form' : 'Show Character Form'}
-            </button>
-            <button
-              onClick={() => setShowDisplaySidebar(!showDisplaySidebar)}
-              className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition-colors text-sm"
-            >
-              {showDisplaySidebar ? 'Hide Display Settings' : 'Show Display Settings'}
-            </button>
-          </div>
-
+          
           <div className="flex-1 flex overflow-hidden">
             {/* Left sidebar - Character Data */}
-            <aside className={`w-96 bg-gray-100 dark:bg-gray-800 p-4 overflow-y-auto transition-all duration-300 ${!showCharacterSidebar && 'hidden'}`}>
-              <form onSubmit={handleCharacterSubmit(onSubmit)} className="space-y-4">
+            <aside className={`bg-gray-800 p-4 overflow-y-auto transition-all duration-300 ${showCharacterSidebar ? 'w-96' : '' }`}>
+            <button
+              onClick={() => setShowCharacterSidebar(!showCharacterSidebar)}
+              className="bg-blue-500 text-white p-1 rounded hover:bg-blue-600 transition-colors text-sm mb-4"
+            >
+              {showCharacterSidebar ? 'Hide Character Form' : <Icon icon="solar:user-bold" className="text-xl" />}
+            </button>
+
+              <form onSubmit={handleCharacterSubmit(onSubmit)} className={`space-y-4 ${!showCharacterSidebar && 'hidden'}`}>
                 {/* Account Section */}
                 <fieldset className="border border-gray-300 dark:border-gray-600 p-3 rounded">
                   <legend className="px-2 font-medium">Account</legend>
@@ -228,8 +221,14 @@ export default function Home() {
             </aside>
 
             {/* Middle sidebar - Display Settings */}
-            <aside className={`w-64 bg-gray-200 dark:bg-gray-700 p-4 overflow-y-auto transition-all duration-300 ${!showDisplaySidebar && 'hidden'}`}>
-              <form className="space-y-4">
+            <aside className={`bg-gray-800 p-4 overflow-y-auto transition-all duration-300 ${showDisplaySidebar ? 'w-96' : '' }`}>
+            <button
+              onClick={() => setShowDisplaySidebar(!showDisplaySidebar)}
+              className="bg-blue-500 text-white p-1 rounded hover:bg-blue-600 transition-colors text-sm mb-4"
+            >
+              {showDisplaySidebar ? 'Hide Display Settings' : <Icon icon="solar:settings-bold" className="text-xl" />}
+            </button>
+              <form className={`space-y-4 ${!showDisplaySidebar && 'hidden'}`}>
                 <fieldset className="border border-gray-300 dark:border-gray-600 p-3 rounded">
                   <legend className="px-2 font-medium">Account Fields</legend>
                   <div className="space-y-2">
@@ -331,7 +330,7 @@ export default function Home() {
             </aside>
 
             {/* Main content */}
-            <main className="overflow-y-auto p-8 w-full">
+            <main className="overflow-y-auto p-4 w-full">
               <div className="w-[1024px] bg-gradient-to-br from-[#1a0000] to-[#2a0000] rounded-lg shadow-lg p-0">
                 <AccountStats 
                   data={allCharactersData}
@@ -341,7 +340,7 @@ export default function Home() {
                   showGuildName={displaySettings.account.guildName}
                 />
                 
-                <div className="grid grid-cols-8 gap-4 mt-4 p-4">
+                <div className="grid grid-cols-8 gap-2 mt-4 p-4">
                   {Object.values(characters)
                     .map(character => ({
                       character,
