@@ -1,19 +1,36 @@
+export type RingId = "other" 
+| "faded-infinity-i" 
+| "forged-infinity-i" 
+| "shiny-infinity-i" 
+| "faded-infinity-ii"
+| "forged-infinity-ii"
+| "shiny-infinity-ii"
+| "faded-infinity-iii"
+| "forged-infinity-iii" 
+| "shiny-infinity-iii" 
+| "shiny-dimension-i" 
+| "shiny-dimension-ii" 
+| "shiny-dimension-iii" 
+| "promise-i" 
+| "promise-ii" 
+| "promise-iii"
+
 export interface Ring {
-  id: string;
+  id: RingId;
   label: string;
   color: string;
   icon: string;
 }
 
 export type RingMap = {
-  [key: string]: Ring;
+  [key in RingId]: Ring;
 };
 
 export const rings: RingMap = {
-  "in-progress": {
-    id: "in-progress",
-    label: "Em Progresso",
-    color: "text-blue-300",
+  "other": {
+    id: "other",
+    label: "Outro",
+    color: "text-gray-400",
     icon: "game-icons:ring"
   },
   "faded-infinity-i": {

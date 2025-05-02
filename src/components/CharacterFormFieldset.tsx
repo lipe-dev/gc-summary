@@ -7,6 +7,7 @@ import { armor } from "@/constants/armor";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import Image from "next/image";
+import { earrings } from "@/constants/earrings";
 
 interface CharacterFormFieldsetProps {
   character: Character;
@@ -81,18 +82,38 @@ export function CharacterFormFieldset({
             {errors.characters?.[character.id]?.totalAttack && <span className="text-red-500 text-xs">{errors.characters[character.id]?.totalAttack?.message}</span>}
           </div>
           <div>
-            <label htmlFor={`${character.id}-earrings`} className="block text-sm">Earrings</label>
+            <label htmlFor={`${character.id}-earring1`} className="block text-sm">Earring 1</label>
             <select
-              id={`${character.id}-earrings`}
-              {...register(`characters.${character.id}.earrings`)}
+              id={`${character.id}-earring1`}
+              {...register(`characters.${character.id}.earring1`)}
               className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
             >
-              <option value="in-progress">In Progress</option>
-              <option value="epic-set">Epic Set</option>
-              <option value="relic-set">Relic Set</option>
-              <option value="chaos-set">Chaos Set</option>
+              <option value="none">None</option>
+              <option value="in-progress">Em Progresso</option>
+              {Object.entries(earrings).map(([id, earring]) => (
+                <option key={id} value={id}>
+                  {earring.label}
+                </option>
+              ))}
             </select>
-            {errors.characters?.[character.id]?.earrings && <span className="text-red-500 text-xs">{errors.characters[character.id]?.earrings?.message}</span>}
+            {errors.characters?.[character.id]?.earring1 && <span className="text-red-500 text-xs">{errors.characters[character.id]?.earring1?.message}</span>}
+          </div>
+          <div>
+            <label htmlFor={`${character.id}-earring2`} className="block text-sm">Earring 2</label>
+            <select
+              id={`${character.id}-earring2`}
+              {...register(`characters.${character.id}.earring2`)}
+              className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
+            >
+              <option value="none">None</option>
+              <option value="in-progress">Em Progresso</option>
+              {Object.entries(earrings).map(([id, earring]) => (
+                <option key={id} value={id}>
+                  {earring.label}
+                </option>
+              ))}
+            </select>
+            {errors.characters?.[character.id]?.earring2 && <span className="text-red-500 text-xs">{errors.characters[character.id]?.earring2?.message}</span>}
           </div>
           <div>
             <label htmlFor={`${character.id}-rune1`} className="block text-sm">Rune Set 1</label>
@@ -102,8 +123,8 @@ export function CharacterFormFieldset({
               className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
             >
               <option value="none">None</option>
-              {Object.values(runes).map((rune) => (
-                <option key={rune.id} value={rune.id}>
+              {Object.entries(runes).map(([id, rune]) => (
+                <option key={id} value={id}>
                   {rune.label}
                 </option>
               ))}
@@ -118,8 +139,8 @@ export function CharacterFormFieldset({
               className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
             >
               <option value="none">None</option>
-              {Object.values(runes).map((rune) => (
-                <option key={rune.id} value={rune.id}>
+              {Object.entries(runes).map(([id, rune]) => (
+                <option key={id} value={id}>
                   {rune.label}
                 </option>
               ))}
@@ -133,8 +154,9 @@ export function CharacterFormFieldset({
               {...register(`characters.${character.id}.ring`)}
               className="w-full p-1 border rounded dark:bg-gray-700 dark:border-gray-600"
             >
-              {Object.values(rings).map((ring) => (
-                <option key={ring.id} value={ring.id}>
+              <option value="none">None</option>
+              {Object.entries(rings).map(([id, ring]) => (
+                <option key={id} value={id}>
                   {ring.label}
                 </option>
               ))}

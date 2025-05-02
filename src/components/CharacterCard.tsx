@@ -1,12 +1,13 @@
 import { CharacterSpecificData, FullAccountData } from "@/schemas/character";
 import { runes } from "@/constants/runes";
 import { RuneIcon } from "./RuneIcon";
-import { earrings } from "@/constants/earrings";
+import { earrings, chaosSet, epicSet, relicSet } from "@/constants/earrings";
 import { EarringIcon } from "./EarringIcon";
 import { rings } from "@/constants/rings";
 import { RingIcon } from "./RingIcon";
 import { armor } from "@/constants/armor";
 import { Icon } from "@iconify/react";
+import { EarringId } from "@/constants/earrings";
 
 const formatAttack = (attack: number): string => {
   if (attack >= 1000000) {
@@ -113,6 +114,16 @@ export function CharacterCard({
   characters,
   showFullSR
 }: CharacterCardProps) {
+  const hasEpicSet = epicSet.every(item => 
+    data.earring1 === item || data.earring2 === item
+  );
+  const hasRelicSet = relicSet.every(item => 
+    data.earring1 === item || data.earring2 === item
+  );
+  const hasChaosSet = chaosSet.every(item => 
+    data.earring1 === item || data.earring2 === item
+  );
+
   const cardItems = [
     { show: showWlFloor, value: `${data.wlFloor}F` },
   ].filter(item => item.show);
@@ -137,10 +148,17 @@ export function CharacterCard({
         />
       </div>
       <div className="flex items-center gap-1 -mt-2 flex-wrap justify-center w-11/12 bg-gradient-to-br from-[#0a0000] to-[#1a0000] rounded-b-lg pt-3 px-1">
-        {showEarrings && data.earrings !== "in-progress" && (
-          <EarringIcon earring={earrings[data.earrings]} size={20} />
+        {showEarrings && hasEpicSet && (
+          <EarringIcon earring={earrings[data.earring1 as EarringId]} size={20} />
         )}
-        {showRing && data.ring !== "in-progress" && (
+        {showEarrings && hasRelicSet && (
+          <EarringIcon earring={earrings[data.earring2 as EarringId]} size={20} />
+        )}
+        {showEarrings && hasChaosSet && (
+          <EarringIcon earring={earrings[data.earring2 as EarringId]} size={20} />
+        )}
+        
+        {showRing && data.ring !== "in-progress" && data.ring !== "none" && (
           <RingIcon ring={rings[data.ring]} size={20} />
         )}
         {(showRuneSet1 || showRuneSet2) && (data.runeSet1 !== "none" || data.runeSet2 !== "none") && (

@@ -1,52 +1,120 @@
-import { rings } from "./rings";
+import { EarringId } from "./earrings";
+import { FragmentId } from "./fragments";
+import { RingId } from "./rings";
 
-export const dismantleItems = {
-  "dimensional-earring-rare": {
-    id: "dimensional-earring-rare",
-    label: "Dimensional Earring (Rare)",
-    icon: "game-icons:earrings",
+export type DismantleRing = {
+  id: RingId;
+  label: string;
+  icon: string;
+  fragments: Partial<Record<FragmentId, number>>;
+};
+export const dismantleRings: Record<string, DismantleRing> = {
+  "faded-infinity-iii": {
+    id: "faded-infinity-iii",
+    label: "Anel Infinito Esmaecido III",
+    icon: "game-icons:ring",
     fragments: {
-      "s-rank": 1,
+      "infinity-ring-iii-fragment": 6,
     },
   },
-  "dimensional-earring-epic": {
-    id: "dimensional-earring-epic",
+  "forged-infinity-iii": {
+    id: "forged-infinity-iii",
+    label: "Anel Infinito Forjado III",
+    icon: "game-icons:ring",
+    fragments: {
+      "infinity-ring-iii-fragment": 8,
+    },
+  },
+  "shiny-infinity-iii": {
+    id: "shiny-infinity-iii",
+    label: "Anel Infinito Brilhante III",
+    icon: "game-icons:ring",
+    fragments: {
+      "infinity-ring-iii-fragment": 10,
+    },
+  },
+  "faded-dimension-iii": {
+    id: "faded-dimension-i",
+    label: "Dimensão Esmaecida I",
+    icon: "game-icons:ring",
+    fragments: {
+      "infinity-ring-iii-fragment": 3,
+    },
+  },
+  "forged-dimension-iii": {
+    id: "forged-dimension-iii",
+    label: "Dimensão Forjada III",
+    icon: "game-icons:ring",
+    fragments: {
+      "infinity-ring-iii-fragment": 4,
+    },
+  },
+  "shiny-dimension-iii": {
+    id: "shiny-dimension-iii",
+    label: "Dimensão Brilhante III",
+    icon: "game-icons:ring",
+    fragments: {
+      "infinity-ring-iii-fragment": 5,
+    },
+  },
+} as const;
+
+export type DismantleEarring = {
+  id: EarringId;
+  label: string;
+  icon: string;
+  fragments: Partial<Record<FragmentId, number>>;
+};
+
+export const dismantleEarrings: Record<string, DismantleEarring> = {
+  "rare-dimensional-earring": {
+    id: "rare-dimensional-earring",
+    label: "Brinco Dimensional Raro",
+    icon: "game-icons:earrings",
+    fragments: {
+      "dimension-earring-fragment": 10,
+    },
+  },
+  "epic-dimensional-earring": {
+    id: "epic-dimensional-earring",
     label: "Dimensional Earring (Epic)",
     icon: "game-icons:earrings",
     fragments: {
-      "s-rank": 2,
+      "dimension-earring-fragment": 17,
     },
   },
-  "dimensional-earring-relic": {
-    id: "dimensional-earring-relic",
-    label: "Dimensional Earring (Relic)",
+  "relic-dimensional-earring": {
+    id: "relic-dimensional-earring",
+    label: "Brinco Dimensional Lendário",
     icon: "game-icons:earrings",
     fragments: {
-      "s-rank": 3,
+      "dimension-earring-fragment": 23,
+      "dimension-core": 27,
     },
   },
-  "dimensional-piercing-rare": {
-    id: "dimensional-piercing-rare",
-    label: "Dimensional Piercing (Rare)",
+  "rare-dimensional-piercing": {
+    id: "rare-dimensional-piercing",
+    label: "Piercing Dimensional Raro",
     icon: "game-icons:earrings",
     fragments: {
-      "s-rank": 1,
+      "dimension-piercing-fragment": 20,
     },
   },
-  "dimensional-piercing-epic": {
-    id: "dimensional-piercing-epic",
-    label: "Dimensional Piercing (Epic)",
+  "epic-dimensional-piercing": {
+    id: "epic-dimensional-piercing",
+    label: "Piercing Dimensional Épico",
     icon: "game-icons:earrings",
     fragments: {
-      "s-rank": 2,
+      "dimension-piercing-fragment": 33,
     },
   },
-  "dimensional-piercing-relic": {
-    id: "dimensional-piercing-relic",
-    label: "Dimensional Piercing (Relic)",
+  "relic-dimensional-piercing": {
+    id: "relic-dimensional-piercing",
+    label: "Piercing Dimensional Lendário",
     icon: "game-icons:earrings",
     fragments: {
-      "s-rank": 3,
+      "dimension-piercing-fragment": 47,
+      "dimension-core": 27,
     },
   },
   "order-earring": {
@@ -54,7 +122,8 @@ export const dismantleItems = {
     label: "Order Earring",
     icon: "game-icons:earrings",
     fragments: {
-      "s-rank": 5,
+      "dimension-earring-fragment": 23,
+      "dimension-core": 23,
     },
   },
   "order-piercing": {
@@ -62,7 +131,8 @@ export const dismantleItems = {
     label: "Order Piercing",
     icon: "game-icons:earrings",
     fragments: {
-      "s-rank": 5,
+      "dimension-piercing-fragment": 47,
+      "dimension-core": 23,
     },
   },
   "chaos-earring": {
@@ -70,7 +140,8 @@ export const dismantleItems = {
     label: "Chaos Earring",
     icon: "game-icons:earrings",
     fragments: {
-      "s-rank": 5,
+      "dimension-earring-fragment": 33,
+      "dimension-core": 37,
     },
   },
   "chaos-piercing": {
@@ -78,9 +149,8 @@ export const dismantleItems = {
     label: "Chaos Piercing",
     icon: "game-icons:earrings",
     fragments: {
-      "s-rank": 5,
+      "dimension-piercing-fragment": 67,
+      "dimension-core": 37,
     },
   },
-} as const;
-
-export type DismantleItemId = keyof typeof dismantleItems; 
+};

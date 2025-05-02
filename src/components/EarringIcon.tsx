@@ -10,7 +10,7 @@ interface EarringIconProps {
 
 export function EarringIcon({ earring, size = 24, className = "" }: EarringIconProps) {
   return (
-    <div className={clsx("flex items-center justify-center", className)} title={earring.label}>
+    <div className={clsx("flex items-center justify-center", className)} title={earring.label.replace("Piercing", "Set").replace("Brinco", "")}>
       <Icon
         icon={earring.icon}
         width={size}

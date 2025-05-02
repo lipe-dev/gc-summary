@@ -3,8 +3,7 @@ import { characters } from "@/constants/characters";
 import { runes } from "@/constants/runes";
 import { rings } from "@/constants/rings";
 import { armor } from "@/constants/armor";
-
-const armorPieces = Object.keys(armor) as [string, ...string[]];
+import { earrings } from "@/constants/earrings";
 
 export const ringSchema = z.object({
   type: z.enum(["dimensional", "infinity", "promise"]),
@@ -12,19 +11,17 @@ export const ringSchema = z.object({
   quality: z.enum(["faded", "processed", "shiny"]).optional(),
 });
 
-export const characterFormSchema = z.object({
-  level: z.number().min(1).max(99),
+export const characterSpecificDataSchema = z.object({
+  level: z.number().min(1).max(85),
   wlFloor: z.number().min(1).max(30),
   totalAttack: z.number().min(0),
-  earrings: z.enum(["in-progress", "epic-set", "relic-set", "chaos-set"]),
+  earring1: z.enum(["none", "in-progress", ...Object.keys(earrings)]),
+  earring2: z.enum(["none", "in-progress", ...Object.keys(earrings)]),
   runeSet1: z.enum(["none", ...Object.keys(runes)]),
   runeSet2: z.enum(["none", ...Object.keys(runes)]),
-  ring: z.enum(["in-progress", ...Object.keys(rings)]),
-  voidPieces: z.record(z.boolean()),
-  fullSR: z.record(z.boolean()).refine(
-    (obj) => Object.keys(obj).every(key => armorPieces.includes(key)),
-    "Invalid armor piece"
-  ),
+  ring: z.enum(["none", "in-progress", ...Object.keys(rings)]),
+  voidPieces: z.record(z.string(), z.boolean()),
+  fullSR: z.record(z.string(), z.boolean()),
 });
 
 export const accountSchema = z.object({
@@ -67,11 +64,11 @@ export const characterSchema = z.object({
   account: accountSchema,
   characters: z.record(
     z.enum(Object.values(characters).map(c => c.id) as [string, ...string[]]),
-    characterFormSchema
+    characterSpecificDataSchema
   ),
 });
 
 export type AccountSpecificData = z.infer<typeof accountSchema>;
-export type CharacterSpecificData = z.infer<typeof characterFormSchema>;
+export type CharacterSpecificData = z.infer<typeof characterSpecificDataSchema>;
 export type FullAccountData = z.infer<typeof characterSchema>;
 export type DisplaySettings = z.infer<typeof displaySettingsSchema>; 

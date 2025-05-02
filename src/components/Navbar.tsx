@@ -15,9 +15,9 @@ export function Navbar() {
               Account Summary
             </Link>
             <div className="h-4 w-px bg-gray-500"></div>
-            {/* <Link href="/frags" className="text-blue-400 hover:text-blue-300 transition-colors">
+            <Link href="/frags" className="text-blue-400 hover:text-blue-300 transition-colors">
               Fragment Calculator
-            </Link> */}
+            </Link>
           </div>
         </div>
         <div className="flex items-center gap-4">
