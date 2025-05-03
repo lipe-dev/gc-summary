@@ -2,7 +2,6 @@ import { z } from "zod";
 import { characters } from "@/constants/characters";
 import { runes } from "@/constants/runes";
 import { rings } from "@/constants/rings";
-import { armor } from "@/constants/armor";
 import { earrings } from "@/constants/earrings";
 
 export const ringSchema = z.object({

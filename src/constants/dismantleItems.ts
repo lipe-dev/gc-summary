@@ -154,3 +154,37 @@ export const dismantleEarrings: Record<string, DismantleEarring> = {
     },
   },
 };
+
+export type SmallVoidFragment = {
+  id: string;
+  label: string;
+  icon: string;
+  fragments: Partial<Record<FragmentId, number>>;
+};
+
+export const smallVoidFragments: Record<string, SmallVoidFragment> = {
+  "small-void-1-fragment": {
+    id: "small-void-1-fragment",
+    label: "Fragmento Pequeno do Void 1",
+    icon: "game-icons:fragment",
+    fragments: {
+      "void-1-fragment": 0.5,
+    },
+  },
+  "small-void-2-fragment": {
+    id: "small-void-2-fragment",
+    label: "Fragmento Pequeno do Void 2",
+    icon: "game-icons:fragment",
+    fragments: {
+      "void-2-fragment": 0.5,
+    },
+  },
+  "small-void-3-fragment": {
+    id: "small-void-3-fragment",
+    label: "Fragmento Pequeno do Void 3",
+    icon: "game-icons:fragment",
+    fragments: {
+      "void-3-fragment": 0.5,
+    },
+  },
+};
