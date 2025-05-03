@@ -8,8 +8,8 @@ export type RingId = "other"
 | "faded-infinity-iii"
 | "forged-infinity-iii" 
 | "shiny-infinity-iii" 
-| "shiny-dimension-i" 
-| "shiny-dimension-ii" 
+| "faded-dimension-iii"
+| "forged-dimension-iii"
 | "shiny-dimension-iii" 
 | "promise-i" 
 | "promise-ii" 
@@ -87,17 +87,17 @@ export const rings: RingMap = {
     color: "text-blue-300",
     icon: "file-icons:ring"
   },
-  "shiny-dimension-i": {
-    id: "shiny-dimension-i",
-    label: "Dimensão Brilhante I",
-    color: "text-blue-600",
-    icon: "ic:outline-circle"
+  "faded-dimension-iii": {
+    id: "faded-dimension-iii",
+    label: "Dimensão Esmaecida III",
+    color: "text-blue-300",
+    icon: "file-icons:ring"
   },
-  "shiny-dimension-ii": {
-    id: "shiny-dimension-ii",
-    label: "Dimensão Brilhante II",
-    color: "text-blue-600",
-    icon: "game-icons:big-diamond-ring"
+  "forged-dimension-iii": {
+    id: "forged-dimension-iii",
+    label: "Dimensão Forjada III",
+    color: "text-blue-300",
+    icon: "file-icons:ring"
   },
   "shiny-dimension-iii": {
     id: "shiny-dimension-iii",
@@ -122,5 +122,5 @@ export const rings: RingMap = {
     label: "Promessa III",
     color: "text-red-400",
     icon: "file-icons:ring"
-  }
+  },
 }; 

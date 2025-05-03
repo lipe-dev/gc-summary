@@ -34,8 +34,8 @@ export const dismantleRings: Record<string, DismantleRing> = {
     },
   },
   "faded-dimension-iii": {
-    id: "faded-dimension-i",
-    label: "Dimensão Esmaecida I",
+    id: "faded-dimension-iii",
+    label: "Dimensão Esmaecida III",
     icon: "game-icons:ring",
     fragments: {
       "infinity-ring-iii-fragment": 3,
