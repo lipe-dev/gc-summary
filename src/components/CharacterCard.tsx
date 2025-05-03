@@ -3,7 +3,7 @@ import { runes } from "@/constants/runes";
 import { RuneIcon } from "./RuneIcon";
 import { earrings, chaosSet, epicSet, relicSet } from "@/constants/earrings";
 import { EarringIcon } from "./EarringIcon";
-import { rings } from "@/constants/rings";
+import { RingId, rings } from "@/constants/rings";
 import { RingIcon } from "./RingIcon";
 import { armor } from "@/constants/armor";
 import { Icon } from "@iconify/react";
@@ -159,7 +159,7 @@ export function CharacterCard({
         )}
         
         {showRing && data.ring !== "in-progress" && data.ring !== "none" && (
-          <RingIcon ring={rings[data.ring]} size={20} />
+          <RingIcon ring={rings[data.ring as RingId]} size={20} />
         )}
         {(showRuneSet1 || showRuneSet2) && (data.runeSet1 !== "none" || data.runeSet2 !== "none") && (
           <>

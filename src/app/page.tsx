@@ -17,12 +17,13 @@ const defaultCharacterData: CharacterSpecificData = {
   level: 85,
   wlFloor: 30,
   totalAttack: 0,
-  earrings: "in-progress",
   runeSet1: "none",
   runeSet2: "none",
   ring: "in-progress",
   voidPieces: {},
-  fullSR: {}
+  fullSR: {},
+  earring1: "in-progress",
+  earring2: "in-progress",
 };
 
 const defaultDisplaySettings: DisplaySettings = {
@@ -106,7 +107,8 @@ export default function Home() {
           setCharacterValue(`characters.${characterKey}.level`, characterData.level);
           setCharacterValue(`characters.${characterKey}.wlFloor`, characterData.wlFloor);
           setCharacterValue(`characters.${characterKey}.totalAttack`, characterData.totalAttack);
-          setCharacterValue(`characters.${characterKey}.earrings`, characterData.earrings);
+          setCharacterValue(`characters.${characterKey}.earring1`, characterData.earring1);
+          setCharacterValue(`characters.${characterKey}.earring2`, characterData.earring2);
           setCharacterValue(`characters.${characterKey}.runeSet1`, characterData.runeSet1);
           setCharacterValue(`characters.${characterKey}.runeSet2`, characterData.runeSet2);
           setCharacterValue(`characters.${characterKey}.ring`, characterData.ring);

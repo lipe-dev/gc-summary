@@ -1,3 +1,4 @@
+import { chaosSet, relicSet } from "@/constants/earrings";
 import { FullAccountData } from "@/schemas/character";
 
 const MAX_VOID_PIECES = 7;
@@ -29,8 +30,10 @@ export function CharacterStats({
   const floor30Count = Object.values(data.characters).filter(c => c.wlFloor >= 30).length;
   const oneMillionCount = Object.values(data.characters).filter(c => c.totalAttack >= 1000000).length;
   const relicChaosRingCount = Object.values(data.characters).filter(c => 
-    c.earrings === "relic-set" || c.earrings === "chaos-set"
+    relicSet.every(item => c.earring1 === item || c.earring2 === item) ||
+    chaosSet.every(item => c.earring1 === item || c.earring2 === item)
   ).length;
+
   const completedRingCount = Object.values(data.characters).filter(c => 
     (c.ring === "promise-iii") || 
     (c.ring === "forged-infinity-iii")
