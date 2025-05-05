@@ -11,7 +11,6 @@ export default function FragsLayout({
   const pathname = usePathname();
   const tabs = [
     { href: "/frags", label: "Fragmentos do Void" },
-    { href: "/frags/ring", label: "Fragmentos do Anel do Claustro" },
     { href: "/frags/earring", label: "Fragmentos de Brincos do Outro Mundo" },
   ];
 

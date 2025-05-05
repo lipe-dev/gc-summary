@@ -18,6 +18,10 @@ export function Navbar() {
             <Link href="/frags" className="text-blue-400 hover:text-blue-300 transition-colors">
               Fragment Calculator
             </Link>
+            <div className="h-4 w-px bg-gray-500"></div>
+            <Link href="/checklist" className="text-blue-400 hover:text-blue-300 transition-colors">
+              Checklist
+            </Link>
           </div>
         </div>
         <div className="flex items-center gap-4">
