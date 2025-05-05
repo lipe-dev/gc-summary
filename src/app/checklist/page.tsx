@@ -14,17 +14,53 @@ type CharacterChecklist = {
   [key: string]: ChecklistItem[];
 };
 
+type StorageData = {
+  dailyAccountItems: ChecklistItem[];
+  weeklyAccountItems: ChecklistItem[];
+  dailyCharacterItems: CharacterChecklist;
+  weeklyCharacterItems: CharacterChecklist;
+  lastUpdatedAt: number;
+};
+
+const STORAGE_KEY = 'checklist-data';
+
 export default function ChecklistPage() {
-  const [dailyAccountItems, setDailyAccountItems] = useState<ChecklistItem[]>([
-    { id: "daily-account-1", label: "Infinity Cloyster", completed: false },
-    { id: "daily-account-2", label: "Infinity Cloyster", completed: false },
-    { id: "daily-account-3", label: "Infinity Cloyster", completed: false },
-  ]);
+  const [dailyAccountItems, setDailyAccountItems] = useState<ChecklistItem[]>(() => {
+    if (typeof window === 'undefined') return [
+      { id: "daily-account-1", label: "Infinity Cloyster", completed: false },
+      { id: "daily-account-2", label: "Infinity Cloyster", completed: false },
+      { id: "daily-account-3", label: "Infinity Cloyster", completed: false },
+    ];
+    
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const data = JSON.parse(stored);
+      return data.dailyAccountItems || [
+        { id: "daily-account-1", label: "Infinity Cloyster", completed: false },
+        { id: "daily-account-2", label: "Infinity Cloyster", completed: false },
+        { id: "daily-account-3", label: "Infinity Cloyster", completed: false },
+      ];
+    }
+    return [
+      { id: "daily-account-1", label: "Infinity Cloyster", completed: false },
+      { id: "daily-account-2", label: "Infinity Cloyster", completed: false },
+      { id: "daily-account-3", label: "Infinity Cloyster", completed: false },
+    ];
+  });
 
-  const [weeklyAccountItems, setWeeklyAccountItems] = useState<ChecklistItem[]>([]);
+  const [weeklyAccountItems, setWeeklyAccountItems] = useState<ChecklistItem[]>(() => {
+    if (typeof window === 'undefined') return [];
+    
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const data = JSON.parse(stored);
+      return data.weeklyAccountItems || [];
+    }
+    return [];
+  });
 
-  const [dailyCharacterItems, setDailyCharacterItems] = useState<CharacterChecklist>(
-    Object.keys(characters).reduce((acc, id) => ({
+  const [dailyCharacterItems, setDailyCharacterItems] = useState<CharacterChecklist>(() => {
+    if (typeof window === 'undefined') return Object.keys(characters).reduce((acc, id) => ({
       ...acc,
       [id]: [
         { id: `${id}-wl`, label: "WL", completed: false },
@@ -37,11 +73,44 @@ export default function ChecklistPage() {
         { id: `${id}-gek-1`, label: "GEK", completed: false },
         { id: `${id}-gek-2`, label: "GEK", completed: false },
       ]
-    }), {})
-  );
+    }), {});
+    
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const data = JSON.parse(stored);
+      return data.dailyCharacterItems || Object.keys(characters).reduce((acc, id) => ({
+        ...acc,
+        [id]: [
+          { id: `${id}-wl`, label: "WL", completed: false },
+          { id: `${id}-sanctum`, label: "Sanctum", completed: false },
+          { id: `${id}-crucible`, label: "Crucible", completed: false },
+          { id: `${id}-berkas`, label: "Berkas", completed: false },
+          { id: `${id}-tod-1`, label: "ToD", completed: false },
+          { id: `${id}-tod-2`, label: "ToD", completed: false },
+          { id: `${id}-tod-3`, label: "ToD", completed: false },
+          { id: `${id}-gek-1`, label: "GEK", completed: false },
+          { id: `${id}-gek-2`, label: "GEK", completed: false },
+        ]
+      }), {});
+    }
+    return Object.keys(characters).reduce((acc, id) => ({
+      ...acc,
+      [id]: [
+        { id: `${id}-wl`, label: "WL", completed: false },
+        { id: `${id}-sanctum`, label: "Sanctum", completed: false },
+        { id: `${id}-crucible`, label: "Crucible", completed: false },
+        { id: `${id}-berkas`, label: "Berkas", completed: false },
+        { id: `${id}-tod-1`, label: "ToD", completed: false },
+        { id: `${id}-tod-2`, label: "ToD", completed: false },
+        { id: `${id}-tod-3`, label: "ToD", completed: false },
+        { id: `${id}-gek-1`, label: "GEK", completed: false },
+        { id: `${id}-gek-2`, label: "GEK", completed: false },
+      ]
+    }), {});
+  });
 
-  const [weeklyCharacterItems, setWeeklyCharacterItems] = useState<CharacterChecklist>(
-    Object.keys(characters).reduce((acc, id) => ({
+  const [weeklyCharacterItems, setWeeklyCharacterItems] = useState<CharacterChecklist>(() => {
+    if (typeof window === 'undefined') return Object.keys(characters).reduce((acc, id) => ({
       ...acc,
       [id]: [
         { id: `${id}-harkyon-1`, label: "Harkyon", completed: false },
@@ -57,24 +126,88 @@ export default function ChecklistPage() {
         { id: `${id}-void3-2`, label: "Void 3", completed: false },
         { id: `${id}-void3-3`, label: "Void 3", completed: false },
       ]
-    }), {})
-  );
+    }), {});
+    
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const data = JSON.parse(stored);
+      return data.weeklyCharacterItems || Object.keys(characters).reduce((acc, id) => ({
+        ...acc,
+        [id]: [
+          { id: `${id}-harkyon-1`, label: "Harkyon", completed: false },
+          { id: `${id}-harkyon-2`, label: "Harkyon", completed: false },
+          { id: `${id}-harkyon-3`, label: "Harkyon", completed: false },
+          { id: `${id}-void1-1`, label: "Void 1", completed: false },
+          { id: `${id}-void1-2`, label: "Void 1", completed: false },
+          { id: `${id}-void1-3`, label: "Void 1", completed: false },
+          { id: `${id}-void2-1`, label: "Void 2", completed: false },
+          { id: `${id}-void2-2`, label: "Void 2", completed: false },
+          { id: `${id}-void2-3`, label: "Void 2", completed: false },
+          { id: `${id}-void3-1`, label: "Void 3", completed: false },
+          { id: `${id}-void3-2`, label: "Void 3", completed: false },
+          { id: `${id}-void3-3`, label: "Void 3", completed: false },
+        ]
+      }), {});
+    }
+    return Object.keys(characters).reduce((acc, id) => ({
+      ...acc,
+      [id]: [
+        { id: `${id}-harkyon-1`, label: "Harkyon", completed: false },
+        { id: `${id}-harkyon-2`, label: "Harkyon", completed: false },
+        { id: `${id}-harkyon-3`, label: "Harkyon", completed: false },
+        { id: `${id}-void1-1`, label: "Void 1", completed: false },
+        { id: `${id}-void1-2`, label: "Void 1", completed: false },
+        { id: `${id}-void1-3`, label: "Void 1", completed: false },
+        { id: `${id}-void2-1`, label: "Void 2", completed: false },
+        { id: `${id}-void2-2`, label: "Void 2", completed: false },
+        { id: `${id}-void2-3`, label: "Void 2", completed: false },
+        { id: `${id}-void3-1`, label: "Void 3", completed: false },
+        { id: `${id}-void3-2`, label: "Void 3", completed: false },
+        { id: `${id}-void3-3`, label: "Void 3", completed: false },
+      ]
+    }), {});
+  });
+
+  const saveToLocalStorage = (data: Omit<StorageData, 'lastUpdatedAt'>) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        ...data,
+        lastUpdatedAt: Date.now()
+      }));
+    }
+  };
 
   const toggleItem = (type: 'daily' | 'weekly', section: 'account' | 'character', id: string, characterId?: string) => {
     if (section === 'account') {
       const setter = type === 'daily' ? setDailyAccountItems : setWeeklyAccountItems;
       const items = type === 'daily' ? dailyAccountItems : weeklyAccountItems;
-      setter(items.map(item => 
+      const newItems = items.map(item => 
         item.id === id ? { ...item, completed: !item.completed } : item
-      ));
+      );
+      setter(newItems);
+      saveToLocalStorage({
+        dailyAccountItems,
+        weeklyAccountItems,
+        dailyCharacterItems,
+        weeklyCharacterItems,
+        [type === 'daily' ? 'dailyAccountItems' : 'weeklyAccountItems']: newItems
+      });
     } else if (characterId) {
       const setter = type === 'daily' ? setDailyCharacterItems : setWeeklyCharacterItems;
       const items = type === 'daily' ? dailyCharacterItems : weeklyCharacterItems;
-      setter({
+      const newItems = {
         ...items,
         [characterId]: items[characterId].map(item =>
           item.id === id ? { ...item, completed: !item.completed } : item
         )
+      };
+      setter(newItems);
+      saveToLocalStorage({
+        dailyAccountItems,
+        weeklyAccountItems,
+        dailyCharacterItems,
+        weeklyCharacterItems,
+        [type === 'daily' ? 'dailyCharacterItems' : 'weeklyCharacterItems']: newItems
       });
     }
   };
@@ -84,27 +217,41 @@ export default function ChecklistPage() {
       const setter = type === 'daily' ? setDailyAccountItems : setWeeklyAccountItems;
       const items = type === 'daily' ? dailyAccountItems : weeklyAccountItems;
       const allChecked = items.every(item => item.completed);
-      setter(items.map(item => ({ ...item, completed: !allChecked })));
+      const newItems = items.map(item => ({ ...item, completed: !allChecked }));
+      setter(newItems);
+      saveToLocalStorage({
+        dailyAccountItems,
+        weeklyAccountItems,
+        dailyCharacterItems,
+        weeklyCharacterItems,
+        [type === 'daily' ? 'dailyAccountItems' : 'weeklyAccountItems']: newItems
+      });
     } else {
       const setter = type === 'daily' ? setDailyCharacterItems : setWeeklyCharacterItems;
       const items = type === 'daily' ? dailyCharacterItems : weeklyCharacterItems;
       const allChecked = Object.values(items).every(characterItems => 
         characterItems[columnIndex].completed
       );
-      setter(
-        Object.entries(items).reduce((acc, [id, characterItems]) => ({
-          ...acc,
-          [id]: characterItems.map((item, index) => 
-            index === columnIndex ? { ...item, completed: !allChecked } : item
-          )
-        }), {})
-      );
+      const newItems = Object.entries(items).reduce((acc, [id, characterItems]) => ({
+        ...acc,
+        [id]: characterItems.map((item, index) => 
+          index === columnIndex ? { ...item, completed: !allChecked } : item
+        )
+      }), {});
+      setter(newItems);
+      saveToLocalStorage({
+        dailyAccountItems,
+        weeklyAccountItems,
+        dailyCharacterItems,
+        weeklyCharacterItems,
+        [type === 'daily' ? 'dailyCharacterItems' : 'weeklyCharacterItems']: newItems
+      });
     }
   };
 
   return (
     <div className="mx-auto p-4">
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-2 gap-4">
         {/* Daily Section */}
         <div className="bg-gray-800 rounded-lg p-6">
           <h2 className="text-2xl font-bold text-blue-400 mb-6">Daily Checklist</h2>
