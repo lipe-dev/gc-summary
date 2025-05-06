@@ -125,6 +125,7 @@ export default function ChecklistPage() {
         { id: `${id}-void3-1`, label: "Void 3", completed: false },
         { id: `${id}-void3-2`, label: "Void 3", completed: false },
         { id: `${id}-void3-3`, label: "Void 3", completed: false },
+        { id: `${id}-ap`, label: "AP", completed: false },
       ]
     }), {});
     
@@ -146,6 +147,7 @@ export default function ChecklistPage() {
           { id: `${id}-void3-1`, label: "Void 3", completed: false },
           { id: `${id}-void3-2`, label: "Void 3", completed: false },
           { id: `${id}-void3-3`, label: "Void 3", completed: false },
+          { id: `${id}-ap`, label: "AP", completed: false },
         ]
       }), {});
     }
@@ -164,6 +166,7 @@ export default function ChecklistPage() {
         { id: `${id}-void3-1`, label: "Void 3", completed: false },
         { id: `${id}-void3-2`, label: "Void 3", completed: false },
         { id: `${id}-void3-3`, label: "Void 3", completed: false },
+        { id: `${id}-ap`, label: "AP", completed: false },
       ]
     }), {});
   });
@@ -287,82 +290,83 @@ export default function ChecklistPage() {
                   <tr className="text-left text-gray-400 text-sm">
                     <th className="p-2">Character</th>
                     <th className="p-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">WL</span>
                         <div className="flex gap-1">
                           <label className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                             <input
                               type="checkbox"
                               checked={Object.values(dailyCharacterItems).every(items => 
-                                items[0].completed
+                                items?.[0]?.completed
                               )}
                               onChange={() => toggleAllInColumn('daily', 'character', 0)}
                               className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                             />
                           </label>
                         </div>
-                        <span>WL (1x)</span>
                       </div>
                     </th>
                     <th className="p-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">Sanctum</span>
                         <div className="flex gap-1">
                           <label className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                             <input
                               type="checkbox"
                               checked={Object.values(dailyCharacterItems).every(items => 
-                                items[1].completed
+                                items?.[1]?.completed
                               )}
                               onChange={() => toggleAllInColumn('daily', 'character', 1)}
                               className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                             />
                           </label>
                         </div>
-                        <span>Sanctum (1x)</span>
                       </div>
                     </th>
                     <th className="p-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">Crucible</span>
                         <div className="flex gap-1">
                           <label className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                             <input
                               type="checkbox"
                               checked={Object.values(dailyCharacterItems).every(items => 
-                                items[2].completed
+                                items?.[2]?.completed
                               )}
                               onChange={() => toggleAllInColumn('daily', 'character', 2)}
                               className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                             />
                           </label>
                         </div>
-                        <span>Crucible (1x)</span>
                       </div>
                     </th>
                     <th className="p-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">Berkas</span>
                         <div className="flex gap-1">
                           <label className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                             <input
                               type="checkbox"
                               checked={Object.values(dailyCharacterItems).every(items => 
-                                items[3].completed
+                                items?.[3]?.completed
                               )}
                               onChange={() => toggleAllInColumn('daily', 'character', 3)}
                               className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                             />
                           </label>
                         </div>
-                        <span>Berkas (1x)</span>
                       </div>
                     </th>
                     <th className="p-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">ToD</span>
                         <div className="flex gap-1">
                           {[0, 1, 2].map(index => (
                             <label key={index} className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                               <input
                                 type="checkbox"
                                 checked={Object.values(dailyCharacterItems).every(items => 
-                                  items[4 + index].completed
+                                  items?.[4 + index]?.completed
                                 )}
                                 onChange={() => toggleAllInColumn('daily', 'character', 4 + index)}
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
@@ -370,18 +374,18 @@ export default function ChecklistPage() {
                             </label>
                           ))}
                         </div>
-                        <span>ToD (3x)</span>
                       </div>
                     </th>
                     <th className="p-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">GEK</span>
                         <div className="flex gap-1">
                           {[0, 1].map(index => (
                             <label key={index} className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                               <input
                                 type="checkbox"
                                 checked={Object.values(dailyCharacterItems).every(items => 
-                                  items[7 + index].completed
+                                  items?.[7 + index]?.completed
                                 )}
                                 onChange={() => toggleAllInColumn('daily', 'character', 7 + index)}
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
@@ -389,7 +393,6 @@ export default function ChecklistPage() {
                             </label>
                           ))}
                         </div>
-                        <span>GEK (2x)</span>
                       </div>
                     </th>
                   </tr>
@@ -507,14 +510,15 @@ export default function ChecklistPage() {
                   <tr className="text-left text-gray-400 text-sm">
                     <th className="p-2">Character</th>
                     <th className="p-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">Harkyon</span>
                         <div className="flex gap-1">
                           {[0, 1, 2].map(index => (
                             <label key={index} className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                               <input
                                 type="checkbox"
                                 checked={Object.values(weeklyCharacterItems).every(items => 
-                                  items[index].completed
+                                  items?.[index]?.completed
                                 )}
                                 onChange={() => toggleAllInColumn('weekly', 'character', index)}
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
@@ -522,18 +526,18 @@ export default function ChecklistPage() {
                             </label>
                           ))}
                         </div>
-                        <span>Harkyon (3x)</span>
                       </div>
                     </th>
                     <th className="p-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">Void 1</span>
                         <div className="flex gap-1">
                           {[0, 1, 2].map(index => (
                             <label key={index} className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                               <input
                                 type="checkbox"
                                 checked={Object.values(weeklyCharacterItems).every(items => 
-                                  items[3 + index].completed
+                                  items?.[3 + index]?.completed
                                 )}
                                 onChange={() => toggleAllInColumn('weekly', 'character', 3 + index)}
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
@@ -541,18 +545,18 @@ export default function ChecklistPage() {
                             </label>
                           ))}
                         </div>
-                        <span>Void 1 (3x)</span>
                       </div>
                     </th>
                     <th className="p-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">Void 2</span>
                         <div className="flex gap-1">
                           {[0, 1, 2].map(index => (
                             <label key={index} className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                               <input
                                 type="checkbox"
                                 checked={Object.values(weeklyCharacterItems).every(items => 
-                                  items[6 + index].completed
+                                  items?.[6 + index]?.completed
                                 )}
                                 onChange={() => toggleAllInColumn('weekly', 'character', 6 + index)}
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
@@ -560,18 +564,18 @@ export default function ChecklistPage() {
                             </label>
                           ))}
                         </div>
-                        <span>Void 2 (3x)</span>
                       </div>
                     </th>
                     <th className="p-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">Void 3</span>
                         <div className="flex gap-1">
                           {[0, 1, 2].map(index => (
                             <label key={index} className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                               <input
                                 type="checkbox"
                                 checked={Object.values(weeklyCharacterItems).every(items => 
-                                  items[9 + index].completed
+                                  items?.[9 + index]?.completed
                                 )}
                                 onChange={() => toggleAllInColumn('weekly', 'character', 9 + index)}
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
@@ -579,7 +583,23 @@ export default function ChecklistPage() {
                             </label>
                           ))}
                         </div>
-                        <span>Void 3 (3x)</span>
+                      </div>
+                    </th>
+                    <th className="p-2">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-gray-300">AP</span>
+                        <div className="flex gap-1">
+                          <label className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={Object.values(weeklyCharacterItems).every(items => 
+                                items?.[12]?.completed
+                              )}
+                              onChange={() => toggleAllInColumn('weekly', 'character', 12)}
+                              className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                            />
+                          </label>
+                        </div>
                       </div>
                     </th>
                   </tr>
@@ -602,12 +622,12 @@ export default function ChecklistPage() {
                       </td>
                       <td className="p-2">
                         <div className="flex gap-1">
-                          {weeklyCharacterItems[id].slice(0, 3).map(item => (
+                          {weeklyCharacterItems?.[id]?.slice(0, 3).map(item => (
                             <label key={item.id} className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                               <input
                                 type="checkbox"
-                                checked={item.completed}
-                                onChange={() => toggleItem('weekly', 'character', item.id, id)}
+                                checked={item?.completed}
+                                onChange={() => toggleItem('weekly', 'character', item?.id, id)}
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                               />
                             </label>
@@ -616,12 +636,12 @@ export default function ChecklistPage() {
                       </td>
                       <td className="p-2">
                         <div className="flex gap-1">
-                          {weeklyCharacterItems[id].slice(3, 6).map(item => (
+                          {weeklyCharacterItems?.[id]?.slice(3, 6).map(item => (
                             <label key={item.id} className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                               <input
                                 type="checkbox"
-                                checked={item.completed}
-                                onChange={() => toggleItem('weekly', 'character', item.id, id)}
+                                checked={item?.completed}
+                                onChange={() => toggleItem('weekly', 'character', item?.id, id)}
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                               />
                             </label>
@@ -630,12 +650,12 @@ export default function ChecklistPage() {
                       </td>
                       <td className="p-2">
                         <div className="flex gap-1">
-                          {weeklyCharacterItems[id].slice(6, 9).map(item => (
+                          {weeklyCharacterItems?.[id]?.slice(6, 9).map(item => (
                             <label key={item.id} className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                               <input
                                 type="checkbox"
-                                checked={item.completed}
-                                onChange={() => toggleItem('weekly', 'character', item.id, id)}
+                                checked={item?.completed}
+                                onChange={() => toggleItem('weekly', 'character', item?.id, id)}
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                               />
                             </label>
@@ -644,17 +664,27 @@ export default function ChecklistPage() {
                       </td>
                       <td className="p-2">
                         <div className="flex gap-1">
-                          {weeklyCharacterItems[id].slice(9, 12).map(item => (
+                          {weeklyCharacterItems?.[id]?.slice(9, 12).map(item => (
                             <label key={item.id} className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
                               <input
                                 type="checkbox"
-                                checked={item.completed}
-                                onChange={() => toggleItem('weekly', 'character', item.id, id)}
+                                checked={item?.completed}
+                                onChange={() => toggleItem('weekly', 'character', item?.id, id)}
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                               />
                             </label>
                           ))}
                         </div>
+                      </td>
+                      <td className="p-2">
+                        <label className="flex items-center text-gray-300 hover:text-gray-100 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={weeklyCharacterItems?.[id]?.[12]?.completed}
+                            onChange={() => toggleItem('weekly', 'character', weeklyCharacterItems?.[id]?.[12]?.id, id)}
+                            className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                          />
+                        </label>
                       </td>
                     </tr>
                   ))}
