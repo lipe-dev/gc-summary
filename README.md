@@ -9,3 +9,5 @@ Spoiler Alert: This is the worst codebase ever.
 While it does technically work, the code quickly devolved into a super complex and impossible to maintain setup with tones of nested arrays within nested arrays of objects containing more arrays.
 
 If I had to do any actual maintenance on this codebase I think I would just throw it away and rebuild it from scratch.
+
+With all that said, it's still a fun tool that I made in an afternoon to share with my guildmates (it beats our previous google docs setup lol)
